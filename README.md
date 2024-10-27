@@ -31,9 +31,11 @@ The levels range from 0 (no experience) to 10 (maximum experience).
 Each user story contains 5 items with random colors. To bring
 a user story from start to finish, all items need to be checked off:
 
-   bbwgr (not started story)
-   BBwgr (semi-worked on story)
-   BBWGR (finished story)
+   * bbwgr (not started story)
+   * BBwgr (semi-worked on story)
+   * BBWGR (finished story)
+
+The items needs to be finished in order.
 
 The time it takes for a bird to finish an item depends on it's
 experience in the color of the item.
