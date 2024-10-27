@@ -87,4 +87,24 @@ field, to the right, and is considered 'finished'. The time it took
 from start to finish is the cycle time of the story.
 
 
+State machine of a bird
+-----------------------
+
+   * CONTEXT_SWITCHING. Doing nothing.
+   * FLYING_TO_STORY. Bird is flying to a story on the field or on backlog.
+   * WORKING_ON_ITEM. Bird is working on a piece of a story - an item.
+   * DEPLOYING. Bird is flying out with a finished story.
+   * STUDYING. Bird is learning some skill.
+   * FLYING_TO_POND. Bird is flying to pond.
+
+
+State of a story
+----------------
+
+   * Items. An array of 5 work items of different color. Each item has a percent
+   * Position.
+   * Start- and end time.
+
+
+
 
