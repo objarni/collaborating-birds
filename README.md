@@ -2,6 +2,8 @@ Collaborating Birds
 ===================
 
 Background
+----------
+
 I want to visualize how co-creation patterns makes software development
 better in many ways:
 
