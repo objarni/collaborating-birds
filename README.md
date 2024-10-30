@@ -121,9 +121,9 @@ Concepts:
   * Bird (position, state, skill levels, experience points in each skill)
   * WorkItem (an Aspect and a percentage 'done')
   * Story (5 WorkItems, start- and finish times, position)
-  * Backlog (inifinite list of random UserStories)
+  * Backlog (infinite list of random UserStories)
   * Statistics
   * Input
   * Parameters
   * Field
-  * FinishedStories (a list of finished stories and timepoints when they finished)
+  * FinishedStories (a list of finished stories and time-points when they finished)
