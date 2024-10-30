@@ -119,9 +119,9 @@ The simworld is a 100x100 field where the birds work. Some numbers are integer (
 Concepts:
   * Skill (one of the 4 colors)
   * Bird (position, state, skill levels, experience points in each skill)
-  * WorkItem (an Aspect and a percentage 'done')
-  * Story (5 WorkItems, start- and finish times, position)
-  * Backlog (infinite list of random UserStories)
+  * Item (a Skill and a percentage 'done')
+  * Story (5 Items, start- and finish times, position)
+  * Backlog (infinite list of random Stories)
   * Statistics
   * Input
   * Parameters
