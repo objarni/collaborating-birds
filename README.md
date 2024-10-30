@@ -117,13 +117,13 @@ Design. The simulation will be completely separated from the visuals/projection.
 The simworld is a 100x100 field where the birds work. Some numbers are integer (level of skill, experience points), some are floats (position, velocity, work left on item). 
 
 Concepts:
-  Aspect (one of the 4 colors)
-  Bird (position, state, skill levels, experience points in each skill)
-  WorkItem (an Aspect and a percentage 'done')
-  UserStory (5 WorkItems, start- and finish times, position)
-  Backlog (inifinite list of random UserStories)
-  Statistics
-  Input
-  Parameters
-  Field
-  FinishedUserStories (a list of finished stories and timepoints when they finished)
+  * Skill (one of the 4 colors)
+  * Bird (position, state, skill levels, experience points in each skill)
+  * WorkItem (an Aspect and a percentage 'done')
+  * Story (5 WorkItems, start- and finish times, position)
+  * Backlog (inifinite list of random UserStories)
+  * Statistics
+  * Input
+  * Parameters
+  * Field
+  * FinishedStories (a list of finished stories and timepoints when they finished)
