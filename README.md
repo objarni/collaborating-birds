@@ -114,4 +114,16 @@ Will be using "vanilla" react+typescript, I do not need anything but flexbox lay
 
 Design. The simulation will be completely separated from the visuals/projection. In first iteration, input to the simulation (birds, backlog, parameters) will be fixed, and the output of the simulation will be the 4 statistics. Every tick it will be possible to investigate the state of birds, backlog, paintings, statistics in order to visualize it.
 
-The simworld is a 800x800 field where the birds work.
+The simworld is a 100x100 field where the birds work. Some numbers are integer (level of skill, experience points), some are floats (position, velocity, work left on item). 
+
+Concepts:
+  Aspect (one of the 4 colors)
+  Bird (position, state, skill levels, experience points in each skill)
+  WorkItem (an Aspect and a percentage 'done')
+  UserStory (5 WorkItems, start- and finish times, position)
+  Backlog (inifinite list of random UserStories)
+  Statistics
+  Input
+  Parameters
+  Field
+  FinishedUserStories (a list of finished stories and timepoints when they finished)
