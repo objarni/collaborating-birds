@@ -107,4 +107,11 @@ State of a story
 
 
 
+Implementation notes
+--------------------
 
+Will be using "vanilla" react+typescript, I do not need anything but flexbox layout and svgrs.
+
+Design. The simulation will be completely separated from the visuals/projection. In first iteration, input to the simulation (birds, backlog, parameters) will be fixed, and the output of the simulation will be the 4 statistics. Every tick it will be possible to investigate the state of birds, backlog, paintings, statistics in order to visualize it.
+
+The simworld is a 800x800 field where the birds work.
