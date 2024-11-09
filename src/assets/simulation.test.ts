@@ -43,7 +43,10 @@ describe("simulation", () => {
 
 	describe("collaborating bird stories", () => {
 		function printState(s: State) {
-			return `State: ${s.birds}`;
+			const birds = s.birds
+				.map((bird) => `Bird(${bird.skillSet}) at 10, 20`)
+				.join(" | ");
+			return `State: ${birds}`;
 		}
 
 		it("1 bird 1 skill 1 story", () => {
