@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`simulation > collaborating bird stories > 1 bird 1 skill 1 story 1`] = `"Time 9 state:snapshot at 9 state [object Object]"`;

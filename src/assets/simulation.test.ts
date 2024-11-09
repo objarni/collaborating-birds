@@ -14,6 +14,29 @@ function levelForXP(totalXP: number) {
 	return 0;
 }
 
+class Simulation {
+	private input: {
+		backlog: { items: string }[];
+		birds: { skillSet: number[] }[];
+	};
+	private ms: number;
+	constructor(input: {
+		backlog: { items: string }[];
+		birds: { skillSet: number[] }[];
+	}) {
+		this.input = input;
+		this.ms = 0;
+	}
+
+	snapshot() {
+		return `snapshot at ${this.ms} state ${this.input}`;
+	}
+
+	stepTime(milliseconds: number) {
+		this.ms += milliseconds;
+	}
+}
+
 describe("simulation", () => {
 	/* level   1 requires 10 xp
       - " -  2 requires 20 xp
@@ -37,5 +60,38 @@ describe("simulation", () => {
 		expect(levelForXP(330)).toStrictEqual(8);
 		expect(levelForXP(540)).toStrictEqual(9);
 		expect(levelForXP(800)).toStrictEqual(10);
+	});
+
+	//type Skill = "RED" | "BLUE" | "WHITE" | "YELLOW";
+
+	describe("collaborating bird stories", () => {
+		it("1 bird 1 skill 1 story", () => {
+			/* Discrete simulation. The sim starts with input configuration (birds, parameters, backlog, seed)
+		and then can take time steps ("ticks") which updates it's state. It can also give a snapshot
+		of the state: where birds are, where stories are, what the backlog looks like, finished paintings etc.
+		These snapshots can be used to create a 'story board' in approval testing lingua, and also will
+		be the basis for the React and svg rendering.
+		 */
+			let story = "1 bird 1 story 1 skill";
+			const input = {
+				birds: [
+					{
+						skillSet: [1, 0, 0, 0],
+					},
+				],
+				backlog: [
+					{
+						items: "RRRRR",
+					},
+				],
+			};
+			const simulation = new Simulation(input);
+			for (let i = 0; i < 10; i++) {
+				story = `Time ${i} state:`;
+				story += simulation.snapshot();
+				simulation.stepTime(1);
+			}
+			expect(story).toMatchSnapshot();
+		});
 	});
 });
