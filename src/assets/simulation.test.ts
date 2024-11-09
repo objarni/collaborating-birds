@@ -67,8 +67,8 @@ describe("simulation", () => {
 				],
 			};
 			const simulation = new Simulation(input);
-			for (let i = 0; i < 10; i++) {
-				story += `\nTime ${i} state:`;
+			for (let i = 0; i < 9; i++) {
+				story += `\n\nTime ${i} state:\n`;
 				story += printState(simulation.state());
 				simulation.stepTime(1);
 			}
@@ -76,6 +76,14 @@ describe("simulation", () => {
 		});
 	});
 });
+
+type Bird = {
+	skillSet: number[];
+};
+
+type State = {
+	birds: Bird[];
+};
 
 class Simulation {
 	private input: {

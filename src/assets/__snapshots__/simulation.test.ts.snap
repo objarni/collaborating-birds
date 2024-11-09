@@ -2,14 +2,31 @@
 
 exports[`simulation > collaborating bird stories > 1 bird 1 skill 1 story 1`] = `
 "1 bird 1 story 1 skill
-Time 0 state:State: [object Object]
-Time 1 state:State: [object Object]
-Time 2 state:State: [object Object]
-Time 3 state:State: [object Object]
-Time 4 state:State: [object Object]
-Time 5 state:State: [object Object]
-Time 6 state:State: [object Object]
-Time 7 state:State: [object Object]
-Time 8 state:State: [object Object]
-Time 9 state:State: [object Object]"
+
+Time 0 state:
+State: [object Object]
+
+Time 1 state:
+State: [object Object]
+
+Time 2 state:
+State: [object Object]
+
+Time 3 state:
+State: [object Object]
+
+Time 4 state:
+State: [object Object]
+
+Time 5 state:
+State: [object Object]
+
+Time 6 state:
+State: [object Object]
+
+Time 7 state:
+State: [object Object]
+
+Time 8 state:
+State: [object Object]"
 `;
