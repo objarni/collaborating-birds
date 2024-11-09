@@ -42,6 +42,14 @@ describe("simulation", () => {
 	//type Skill = "RED" | "BLUE" | "WHITE" | "YELLOW";
 
 	describe("collaborating bird stories", () => {
+		type Bird = {
+			skillSet: number[];
+		};
+
+		type State = {
+			birds: Bird[];
+		};
+
 		function printState(s: State) {
 			return `State: ${s.birds}`;
 		}
