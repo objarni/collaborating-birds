@@ -42,6 +42,14 @@ describe("simulation", () => {
 	//type Skill = "RED" | "BLUE" | "WHITE" | "YELLOW";
 
 	describe("collaborating bird stories", () => {
+		type Bird = {
+			skillSet: number[];
+		};
+
+		type State = {
+			birds: Bird[];
+		};
+
 		function printState(s: State) {
 			return `State: ${s.birds}`;
 		}
@@ -67,8 +75,8 @@ describe("simulation", () => {
 				],
 			};
 			const simulation = new Simulation(input);
-			for (let i = 0; i < 10; i++) {
-				story += `\nTime ${i} state:`;
+			for (let i = 0; i < 9; i++) {
+				story += `\n\nTime ${i} state:\n`;
 				story += printState(simulation.state());
 				simulation.stepTime(1);
 			}
