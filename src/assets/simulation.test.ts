@@ -14,29 +14,6 @@ function levelForXP(totalXP: number) {
 	return 0;
 }
 
-class Simulation {
-	private input: {
-		backlog: { items: string }[];
-		birds: { skillSet: number[] }[];
-	};
-	private ms: number;
-	constructor(input: {
-		backlog: { items: string }[];
-		birds: { skillSet: number[] }[];
-	}) {
-		this.input = input;
-		this.ms = 0;
-	}
-
-	snapshot() {
-		return `snapshot at ${this.ms} state ${this.input}`;
-	}
-
-	stepTime(milliseconds: number) {
-		this.ms += milliseconds;
-	}
-}
-
 describe("simulation", () => {
 	/* level   1 requires 10 xp
       - " -  2 requires 20 xp
@@ -65,6 +42,10 @@ describe("simulation", () => {
 	//type Skill = "RED" | "BLUE" | "WHITE" | "YELLOW";
 
 	describe("collaborating bird stories", () => {
+		function printState(s: State) {
+			return `State: ${s.birds}`;
+		}
+
 		it("1 bird 1 skill 1 story", () => {
 			/* Discrete simulation. The sim starts with input configuration (birds, parameters, backlog, seed)
 		and then can take time steps ("ticks") which updates it's state. It can also give a snapshot
@@ -87,11 +68,34 @@ describe("simulation", () => {
 			};
 			const simulation = new Simulation(input);
 			for (let i = 0; i < 10; i++) {
-				story = `Time ${i} state:`;
-				story += simulation.snapshot();
+				story += `\nTime ${i} state:`;
+				story += printState(simulation.state());
 				simulation.stepTime(1);
 			}
 			expect(story).toMatchSnapshot();
 		});
 	});
 });
+
+class Simulation {
+	private input: {
+		backlog: { items: string }[];
+		birds: { skillSet: number[] }[];
+	};
+	private ms: number;
+	constructor(input: {
+		backlog: { items: string }[];
+		birds: { skillSet: number[] }[];
+	}) {
+		this.input = input;
+		this.ms = 0;
+	}
+
+	state() {
+		return this.input;
+	}
+
+	stepTime(milliseconds: number) {
+		this.ms += milliseconds;
+	}
+}
