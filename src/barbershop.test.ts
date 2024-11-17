@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-	type Event,
+	type SimEvent,
 	barberShopEventHandler,
 	initialBarberShopState,
 	simulate,
@@ -23,10 +23,12 @@ describe("Barbershop", () => {
 
    */
 	it("1 chair 1 seat 8 hours", () => {
-		const initialEvents: Event[] = [
+		const initialEvents: SimEvent[] = [
 			{
 				time: 0,
-				kind: "CUSTOMER_ARRIVED",
+				kind: {
+					kind: "CUSTOMER_ARRIVED",
+				},
 			},
 		];
 		const initialState = initialBarberShopState(1, 1);
@@ -40,10 +42,10 @@ describe("Barbershop", () => {
 		expect(resultingState.missedClients).toStrictEqual(23);
 	});
 	it("2 chairs 1 seat 8 hours", () => {
-		const initialEvents: Event[] = [
+		const initialEvents: SimEvent[] = [
 			{
 				time: 0,
-				kind: "CUSTOMER_ARRIVED",
+				kind: { kind: "CUSTOMER_ARRIVED" },
 			},
 		];
 		const initialState = initialBarberShopState(2, 1);

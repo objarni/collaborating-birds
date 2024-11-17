@@ -2,7 +2,7 @@ import "./App.css";
 import PriorityQueue from "priority-queue-typescript";
 import { useEffect, useState } from "react";
 import {
-	type Event,
+	type SimEvent,
 	type SimulationState,
 	type SystemState,
 	barberShopEventHandler,
@@ -50,15 +50,15 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 
 function initialSimState(chairs: number, seats: number) {
 	const initialSystemState = initialBarberShopState(chairs, seats);
-	const initialEvents: Event[] = [
+	const initialEvents: SimEvent[] = [
 		{
 			time: 0,
 			kind: "CUSTOMER_ARRIVED",
 		},
 	];
-	const eventQueue = new PriorityQueue<Event>(
+	const eventQueue = new PriorityQueue<SimEvent>(
 		10, // initial capability of queue
-		(a: Event, b: Event) => a.time - b.time,
+		(a: SimEvent, b: SimEvent) => a.time - b.time,
 	);
 	for (const event of initialEvents) {
 		eventQueue.add(event);

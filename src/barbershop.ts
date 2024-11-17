@@ -1,6 +1,8 @@
 import PriorityQueue from "priority-queue-typescript";
 
-type EventKind = "CUSTOMER_ARRIVED" | "CUSTOMER_FINISHED";
+type BarberShopEvent =
+	| { kind: "CUSTOMER_ARRIVED" }
+	| { kind: "CUSTOMER_FINISHED" };
 type ChairStates = "EMPTY" | "CUTTING_HAIR";
 type SeatStates = "EMPTY" | "WAITING_TO_CUT_HAIR";
 
@@ -11,27 +13,32 @@ export interface SystemState {
 	chairs: ChairStates[];
 }
 
-export interface Event {
+export interface SimEvent {
 	time: number;
-	kind: EventKind;
+	kind: BarberShopEvent;
 }
 
-function E(kind: EventKind, time: number): Event {
+function E(kind: BarberShopEvent, time: number): SimEvent {
 	return {
 		kind,
 		time,
 	};
 }
 
-function getFinishedEvent(now: number) {
-	return E("CUSTOMER_FINISHED", now + 20);
+function getFinishedEvent(now: number): SimEvent {
+	return <SimEvent>{
+		kind: {
+			kind: "CUSTOMER_FINISHED",
+		},
+		time: now + 20,
+	};
 }
 
 export function barberShopEventHandler(
 	systemState: SystemState,
-	event: Event,
-): { newSystemState: SystemState; events: Event[] } {
-	switch (event.kind) {
+	event: SimEvent,
+): { newSystemState: SystemState; events: SimEvent[] } {
+	switch (event.kind.kind) {
 		case "CUSTOMER_FINISHED": {
 			systemState.money += 200;
 			console.log(
@@ -55,7 +62,10 @@ export function barberShopEventHandler(
 			};
 		}
 		case "CUSTOMER_ARRIVED": {
-			const nextCustomerArriveEvent = E("CUSTOMER_ARRIVED", event.time + 10);
+			const nextCustomerArriveEvent = E(
+				{ kind: "CUSTOMER_ARRIVED" },
+				event.time + 10,
+			);
 			if (systemState.chairs[0] === "EMPTY") {
 				console.log(event.time, "A customer is getting hair cut.");
 				systemState.chairs[0] = "CUTTING_HAIR";
@@ -90,26 +100,26 @@ export function barberShopEventHandler(
 }
 
 export interface SimulationState {
-	eventQueue: PriorityQueue<Event>;
+	eventQueue: PriorityQueue<SimEvent>;
 	systemState: SystemState;
 	time: number;
 }
 
 export function simulate(
-	initialEvents: Event[],
+	initialEvents: SimEvent[],
 	initialSystemState: SystemState,
 	simulationTimeMinutes: number,
 	handleEvent: (
 		state: SystemState,
-		event: Event,
+		event: SimEvent,
 	) => {
 		newSystemState: SystemState;
-		events: Event[];
+		events: SimEvent[];
 	},
 ): SystemState {
-	const eventQueue = new PriorityQueue<Event>(
+	const eventQueue = new PriorityQueue<SimEvent>(
 		10, // initial capability of queue
-		(a: Event, b: Event) => a.time - b.time,
+		(a: SimEvent, b: SimEvent) => a.time - b.time,
 	);
 	for (const event of initialEvents) {
 		eventQueue.add(event);
@@ -132,10 +142,10 @@ export function simStep(
 	deltaTimeMinutes: number,
 	handleEvent: (
 		state: SystemState,
-		event: Event,
+		event: SimEvent,
 	) => {
 		newSystemState: SystemState;
-		events: Event[];
+		events: SimEvent[];
 	},
 ): SimulationState {
 	const newTime = simulationState.time + deltaTimeMinutes;
