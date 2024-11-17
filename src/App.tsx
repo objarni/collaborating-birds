@@ -33,7 +33,11 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 				</p>
 			))}
 			<h1>Sofa</h1>
-			{state.seats[0]}
+			{state.seats.map((seat, index) => (
+				<p key={index}>
+					{index + 1}. {seat}
+				</p>
+			))}
 			<h2>Simulation Time (minutes)</h2>
 			{minutes}
 			<h2>Missed clients</h2>
