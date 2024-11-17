@@ -1,7 +1,7 @@
 import PriorityQueue from "priority-queue-typescript";
 
 type EventKind = "CUSTOMER_ARRIVED" | "CUSTOMER_FINISHED";
-type ChairStates = "EMPTY" | "CUTTING_HAIR" | "WAITING_TO_PAY";
+type ChairStates = "EMPTY" | "CUTTING_HAIR";
 type SeatStates = "EMPTY" | "WAITING_TO_CUT_HAIR";
 
 export interface SystemState {
