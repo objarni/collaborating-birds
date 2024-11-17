@@ -19,16 +19,19 @@ const SomeOtherComponent = () => (
 );
 
 interface BarberShopProps {
+	minutes: number;
 	state: SystemState;
 }
 
-function BarberShop({ state }: BarberShopProps) {
+function BarberShop({ state, minutes }: BarberShopProps) {
 	return (
 		<div>
 			<h1>Chairs</h1>
 			{state.chairs[0]}
 			<h1>Sofa</h1>
 			{state.seats[0]}
+			<h2>Simulation Time (minutes)</h2>
+			{minutes}
 		</div>
 	);
 }
@@ -74,7 +77,7 @@ function App() {
 		<>
 			<div id="app">
 				<SomeOtherComponent />
-				<BarberShop state={simState.systemState} />
+				<BarberShop state={simState.systemState} minutes={simState.time} />
 			</div>
 		</>
 	);
