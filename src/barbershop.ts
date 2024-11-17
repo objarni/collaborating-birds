@@ -1,8 +1,8 @@
 import PriorityQueue from "priority-queue-typescript";
 
 type BarberShopEvent =
-	| { kind: "CUSTOMER_ARRIVED" }
-	| { kind: "CUSTOMER_FINISHED"; chair: number };
+	| { kind: "CUSTOMER_ARRIVED"; customerName: string }
+	| { kind: "CUSTOMER_FINISHED"; customerName: string; chair: number };
 type ChairStates = "EMPTY" | "CUTTING_HAIR";
 type SeatStates = "EMPTY" | "WAITING_TO_CUT_HAIR";
 
@@ -25,11 +25,16 @@ function E(kind: BarberShopEvent, time: number): SimEvent {
 	};
 }
 
-function getFinishedEvent(now: number, chair: number): SimEvent {
+function getFinishedEvent(
+	now: number,
+	chair: number,
+	customerName: string,
+): SimEvent {
 	return <SimEvent>{
 		kind: {
 			kind: "CUSTOMER_FINISHED",
 			chair,
+			customerName: customerName,
 		},
 		time: now + 20,
 	};
@@ -42,18 +47,19 @@ export function barberShopEventHandler(
 	switch (event.kind.kind) {
 		case "CUSTOMER_FINISHED": {
 			const chair = event.kind.chair;
+			const name = event.kind.customerName;
 			systemState.money += 200;
 			console.log(
 				event.time,
-				`A hair cut finished at chair ${chair}, shop now has ${systemState.money} SEK.`,
+				`${name}'s hair cut finished at chair ${chair}, shop now has ${systemState.money} SEK.`,
 			);
 			systemState.chairs[chair] = "EMPTY";
 			if (systemState.seats[0] === "WAITING_TO_CUT_HAIR") {
-				const finishedEvent = getFinishedEvent(event.time, chair);
+				const finishedEvent = getFinishedEvent(event.time, chair, "Mr Seated");
 				systemState.seats[0] = "EMPTY";
 				console.log(
 					event.time,
-					`A waiting customer sat down to cut the hair at chair ${chair}.`,
+					`The waiting customer ${event.kind.customerName} sat down to cut the hair at chair ${chair}.`,
 				);
 				systemState.chairs[chair] = "CUTTING_HAIR";
 				return {
@@ -68,17 +74,21 @@ export function barberShopEventHandler(
 		}
 		case "CUSTOMER_ARRIVED": {
 			const nextCustomerArriveEvent = E(
-				{ kind: "CUSTOMER_ARRIVED" },
+				{ kind: "CUSTOMER_ARRIVED", customerName: randomName() },
 				event.time + 10,
 			);
 			const chair = 0;
 			if (systemState.chairs[chair] === "EMPTY") {
 				console.log(
 					event.time,
-					`A customer is getting hair cut at chair ${chair}.`,
+					`Customer ${event.kind.customerName} is getting hair cut at chair ${chair}.`,
 				);
 				systemState.chairs[chair] = "CUTTING_HAIR";
-				const finishedEvent = getFinishedEvent(event.time, chair);
+				const finishedEvent = getFinishedEvent(
+					event.time,
+					chair,
+					event.kind.customerName,
+				);
 				return {
 					newSystemState: systemState,
 					events: [nextCustomerArriveEvent, finishedEvent],
@@ -87,7 +97,7 @@ export function barberShopEventHandler(
 			if (systemState.seats[0] === "EMPTY") {
 				console.log(
 					event.time,
-					"A customer takes a seat to wait for hair cut.",
+					`Customer ${event.kind.customerName} takes a seat to wait for hair cut.`,
 				);
 				systemState.seats[0] = "WAITING_TO_CUT_HAIR";
 				return {
@@ -97,7 +107,7 @@ export function barberShopEventHandler(
 			}
 			console.log(
 				event.time,
-				"The barber shop is busy - a customer left without entering.",
+				`The barber shop is busy - customer ${event.kind.customerName} left without entering.`,
 			);
 			systemState.missedClients += 1;
 			return {
@@ -189,4 +199,16 @@ export function initialBarberShopState(chairs: number, seats: number) {
 		seats: Array(seats).fill("EMPTY"),
 	};
 	return initialState;
+}
+
+function randomName(): string {
+	// Generate a random 'name' on form F.L
+	// where F and L are single random letters
+	return `${getRandomLetter()}.${getRandomLetter()}`;
+}
+
+function getRandomLetter(): string {
+	const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	const randomIndex = Math.floor(Math.random() * alphabet.length);
+	return alphabet[randomIndex];
 }

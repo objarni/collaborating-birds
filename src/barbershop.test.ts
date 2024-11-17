@@ -28,6 +28,7 @@ describe("Barbershop", () => {
 				time: 0,
 				kind: {
 					kind: "CUSTOMER_ARRIVED",
+					customerName: "A.A",
 				},
 			},
 		];
@@ -45,7 +46,7 @@ describe("Barbershop", () => {
 		const initialEvents: SimEvent[] = [
 			{
 				time: 0,
-				kind: { kind: "CUSTOMER_ARRIVED" },
+				kind: { kind: "CUSTOMER_ARRIVED", customerName: "A.A" },
 			},
 		];
 		const initialState = initialBarberShopState(2, 1);

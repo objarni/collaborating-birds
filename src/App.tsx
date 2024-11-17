@@ -13,8 +13,8 @@ import {
 const SomeOtherComponent = () => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg viewBox="0 0 100 100">
-		<circle cx={50} cy={50} r={30} fill="red" />
-		<circle cx={5} cy={50} r={30} fill="white" />
+		<circle cx={20} cy={80} r={20} fill="red" />
+		<circle cx={5} cy={30} r={10} fill="white" />
 	</svg>
 );
 
@@ -53,7 +53,9 @@ function initialSimState(chairs: number, seats: number) {
 	const initialEvents: SimEvent[] = [
 		{
 			time: 0,
-			kind: "CUSTOMER_ARRIVED",
+			kind: {
+				kind: "CUSTOMER_ARRIVED",
+			},
 		},
 	];
 	const eventQueue = new PriorityQueue<SimEvent>(
