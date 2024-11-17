@@ -2,7 +2,7 @@ import PriorityQueue from "priority-queue-typescript";
 
 type BarberShopEvent =
 	| { kind: "CUSTOMER_ARRIVED" }
-	| { kind: "CUSTOMER_FINISHED" };
+	| { kind: "CUSTOMER_FINISHED"; chair: number };
 type ChairStates = "EMPTY" | "CUTTING_HAIR";
 type SeatStates = "EMPTY" | "WAITING_TO_CUT_HAIR";
 
@@ -25,10 +25,11 @@ function E(kind: BarberShopEvent, time: number): SimEvent {
 	};
 }
 
-function getFinishedEvent(now: number): SimEvent {
+function getFinishedEvent(now: number, chair: number): SimEvent {
 	return <SimEvent>{
 		kind: {
 			kind: "CUSTOMER_FINISHED",
+			chair,
 		},
 		time: now + 20,
 	};
@@ -40,17 +41,21 @@ export function barberShopEventHandler(
 ): { newSystemState: SystemState; events: SimEvent[] } {
 	switch (event.kind.kind) {
 		case "CUSTOMER_FINISHED": {
+			const chair = event.kind.chair;
 			systemState.money += 200;
 			console.log(
 				event.time,
-				`A hair cut finished, shop now has ${systemState.money} SEK.`,
+				`A hair cut finished at chair ${chair}, shop now has ${systemState.money} SEK.`,
 			);
-			systemState.chairs[0] = "EMPTY";
+			systemState.chairs[chair] = "EMPTY";
 			if (systemState.seats[0] === "WAITING_TO_CUT_HAIR") {
-				const finishedEvent = getFinishedEvent(event.time);
+				const finishedEvent = getFinishedEvent(event.time, chair);
 				systemState.seats[0] = "EMPTY";
-				console.log(event.time, "A waiting customer sat down to cut the hair.");
-				systemState.chairs[0] = "CUTTING_HAIR";
+				console.log(
+					event.time,
+					`A waiting customer sat down to cut the hair at chair ${chair}.`,
+				);
+				systemState.chairs[chair] = "CUTTING_HAIR";
 				return {
 					newSystemState: systemState,
 					events: [finishedEvent],
@@ -66,10 +71,14 @@ export function barberShopEventHandler(
 				{ kind: "CUSTOMER_ARRIVED" },
 				event.time + 10,
 			);
-			if (systemState.chairs[0] === "EMPTY") {
-				console.log(event.time, "A customer is getting hair cut.");
-				systemState.chairs[0] = "CUTTING_HAIR";
-				const finishedEvent = getFinishedEvent(event.time);
+			const chair = 0;
+			if (systemState.chairs[chair] === "EMPTY") {
+				console.log(
+					event.time,
+					`A customer is getting hair cut at chair ${chair}.`,
+				);
+				systemState.chairs[chair] = "CUTTING_HAIR";
+				const finishedEvent = getFinishedEvent(event.time, chair);
 				return {
 					newSystemState: systemState,
 					events: [nextCustomerArriveEvent, finishedEvent],
