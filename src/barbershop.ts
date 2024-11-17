@@ -89,6 +89,12 @@ export function barberShopEventHandler(
 	}
 }
 
+export interface SimulationState {
+	eventQueue: PriorityQueue<Event>;
+	systemState: SystemState;
+	time: number;
+}
+
 export function simulate(
 	initialEvents: Event[],
 	initialSystemState: SystemState,
@@ -108,15 +114,50 @@ export function simulate(
 	for (const event of initialEvents) {
 		eventQueue.add(event);
 	}
-	let systemState = { ...initialSystemState };
+	let simulationState = {
+		time: 0,
+		systemState: initialSystemState,
+		eventQueue: eventQueue,
+	};
+	simulationState = simStep(
+		simulationState,
+		simulationTimeMinutes,
+		handleEvent,
+	);
+	return simulationState.systemState;
+}
+
+export function simStep(
+	simulationState: SimulationState,
+	deltaTimeMinutes: number,
+	handleEvent: (
+		state: SystemState,
+		event: Event,
+	) => {
+		newSystemState: SystemState;
+		events: Event[];
+	},
+): SimulationState {
+	const newTime = simulationState.time + deltaTimeMinutes;
 	while (true) {
-		const nextEvent = eventQueue.poll();
-		if (nextEvent === null || nextEvent.time > simulationTimeMinutes) break;
-		const result = handleEvent(systemState, nextEvent);
-		systemState = result.newSystemState;
+		const nextEvent = simulationState.eventQueue.poll();
+		if (nextEvent === null) {
+			return {
+				...simulationState,
+				time: newTime,
+			};
+		}
+		if (nextEvent.time > newTime) {
+			simulationState.eventQueue.add(nextEvent);
+			return {
+				...simulationState,
+				time: newTime,
+			};
+		}
+		const result = handleEvent(simulationState.systemState, nextEvent);
+		simulationState.systemState = result.newSystemState;
 		for (const event of result.events) {
-			eventQueue.add(event);
+			simulationState.eventQueue.add(event);
 		}
 	}
-	return systemState;
 }

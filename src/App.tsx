@@ -1,5 +1,4 @@
 import "./App.css";
-import type PriorityQueue from "priority-queue-typescript";
 import { useEffect, useState } from "react";
 import type { Event, SystemState } from "./barbershop.ts";
 
@@ -26,7 +25,7 @@ function BarberShop({ state }: BarberShopProps) {
 }
 
 function App() {
-	const [systemState, setSystemState] = useState<SystemState>({
+	const [systemState] = useState<SystemState>({
 		money: 0,
 		missedClients: 0,
 		seats: ["EMPTY"],
