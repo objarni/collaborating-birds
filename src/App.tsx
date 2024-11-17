@@ -32,6 +32,10 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 			{state.seats[0]}
 			<h2>Simulation Time (minutes)</h2>
 			{minutes}
+			<h2>Missed clients</h2>
+			{state.missedClients}
+			<h2>Cash total (SEK)</h2>
+			{state.money}
 		</div>
 	);
 }
