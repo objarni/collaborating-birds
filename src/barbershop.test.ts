@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
 	type Event,
-	type SystemState,
 	barberShopEventHandler,
+	initialBarberShopState,
 	simulate,
 } from "./barbershop.ts";
 
@@ -29,16 +29,11 @@ describe("Barbershop", () => {
 				kind: "CUSTOMER_ARRIVED",
 			},
 		];
-		const initialState: SystemState = {
-			money: 0,
-			missedClients: 0,
-			seats: ["EMPTY"],
-			chairs: ["EMPTY"],
-		};
+		const initialState = initialBarberShopState(1, 1);
 		const resultingState = simulate(
 			initialEvents,
 			initialState,
-			8 * 60,
+			8 * 60, //minutes
 			barberShopEventHandler,
 		);
 		expect(resultingState.money).toStrictEqual(4800);

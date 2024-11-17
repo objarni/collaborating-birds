@@ -1,8 +1,17 @@
 import "./App.css";
+import PriorityQueue from "priority-queue-typescript";
 import { useEffect, useState } from "react";
-import type { Event, SystemState } from "./barbershop.ts";
+import {
+	type Event,
+	type SimulationState,
+	type SystemState,
+	barberShopEventHandler,
+	initialBarberShopState,
+	simStep,
+} from "./barbershop.ts";
 
 const SomeOtherComponent = () => (
+	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg viewBox="0 0 100 100">
 		<circle cx={50} cy={50} r={30} fill="red" />
 		<circle cx={5} cy={50} r={30} fill="white" />
@@ -24,34 +33,48 @@ function BarberShop({ state }: BarberShopProps) {
 	);
 }
 
+function initialSimState(chairs: number, seats: number) {
+	const initialSystemState = initialBarberShopState(chairs, seats);
+	const initialEvents: Event[] = [
+		{
+			time: 0,
+			kind: "CUSTOMER_ARRIVED",
+		},
+	];
+	const eventQueue = new PriorityQueue<Event>(
+		10, // initial capability of queue
+		(a: Event, b: Event) => a.time - b.time,
+	);
+	for (const event of initialEvents) {
+		eventQueue.add(event);
+	}
+	return {
+		time: 0,
+		systemState: initialSystemState,
+		eventQueue: eventQueue,
+	};
+}
+
 function App() {
-	const [systemState] = useState<SystemState>({
-		money: 0,
-		missedClients: 0,
-		seats: ["EMPTY"],
-		chairs: ["EMPTY"],
-	});
-	// const [eventQueue, setEventQueue] = useState<PriorityQueue<Event>>(10, (a: Event, b: Event) => a.time - b.time));
-	//
-	// const [systemTime, setSystemTime] = useState<number>(0);
-	//
-	// useEffect(() => {
-	// 	const intervalId = setInterval(() => {
-	// 		const newTime = systemTime + 1;
-	//
-	// 		setSystemState(systemState);
-	// 		setSystemTime(newTime);
-	// 	}, 50); // 1000 milliseconds = 1 second
-	//
-	// 	// Cleanup function to clear interval when the component unmounts
-	// 	return () => clearInterval(intervalId);
-	// }, [systemState]);
+	const [simState, setSimState] = useState<SimulationState>(
+		initialSimState(1, 1),
+	);
+
+	useEffect(() => {
+		const intervalId = setInterval(() => {
+			const newSimState = simStep(simState, 1, barberShopEventHandler);
+			setSimState(newSimState);
+		}, 250); // 1000 milliseconds = 1 second
+
+		// Cleanup function to clear interval when the component unmounts
+		return () => clearInterval(intervalId);
+	}, [simState]);
 
 	return (
 		<>
 			<div id="app">
 				<SomeOtherComponent />
-				<BarberShop state={systemState} />
+				<BarberShop state={simState.systemState} />
 			</div>
 		</>
 	);

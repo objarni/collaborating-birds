@@ -161,3 +161,13 @@ export function simStep(
 		}
 	}
 }
+
+export function initialBarberShopState(chairs: number, seats: number) {
+	const initialState: SystemState = {
+		money: 0,
+		missedClients: 0,
+		chairs: Array(chairs).fill("EMPTY"),
+		seats: Array(seats).fill("EMPTY"),
+	};
+	return initialState;
+}
