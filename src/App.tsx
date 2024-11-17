@@ -79,7 +79,7 @@ function App() {
 		const intervalId = setInterval(() => {
 			const newSimState = simStep(simState, 1, barberShopEventHandler);
 			setSimState(newSimState);
-		}, 250); // 1000 milliseconds = 1 second
+		}, 1000); // 1000 milliseconds = 1 second
 
 		// Cleanup function to clear interval when the component unmounts
 		return () => clearInterval(intervalId);
