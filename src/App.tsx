@@ -35,7 +35,8 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 			<h1>Sofa</h1>
 			{state.seats.map((seat, index) => (
 				<p key={index}>
-					{index + 1}. {seat}
+					{index + 1}. {seat.state} (
+					{seat.state === "WAITING_TO_CUT_HAIR" ? seat.customerName : "empty"})
 				</p>
 			))}
 			<h2>Simulation Time (minutes)</h2>
@@ -55,6 +56,7 @@ function initialSimState(chairs: number, seats: number) {
 			time: 0,
 			kind: {
 				kind: "CUSTOMER_ARRIVED",
+				customerName: "A.A",
 			},
 		},
 	];
@@ -74,14 +76,14 @@ function initialSimState(chairs: number, seats: number) {
 
 function App() {
 	const [simState, setSimState] = useState<SimulationState>(
-		initialSimState(1, 1),
+		initialSimState(5, 1),
 	);
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			const newSimState = simStep(simState, 1, barberShopEventHandler);
 			setSimState(newSimState);
-		}, 1000); // 1000 milliseconds = 1 second
+		}, 300); // 1000 milliseconds = 1 second
 
 		// Cleanup function to clear interval when the component unmounts
 		return () => clearInterval(intervalId);
@@ -90,7 +92,7 @@ function App() {
 	return (
 		<>
 			<div id="app">
-				<SomeOtherComponent />
+				{/*<SomeOtherComponent />*/}
 				<BarberShop state={simState.systemState} minutes={simState.time} />
 			</div>
 		</>

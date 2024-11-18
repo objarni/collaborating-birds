@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts"],"version":"5.6.3"}
+{"root":["./src/app.tsx","./src/barbershop.test.ts","./src/barbershop.ts","./src/main.tsx","./src/vite-env.d.ts","./src/assets/discrete-sim.test.ts","./src/assets/simulation.test.ts"],"errors":true,"version":"5.6.3"}
