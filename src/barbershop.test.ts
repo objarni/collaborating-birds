@@ -40,7 +40,7 @@ describe("Barbershop", () => {
 			barberShopEventHandler,
 		);
 		expect(resultingState.money).toStrictEqual(4800);
-		expect(resultingState.missedClients).toStrictEqual(23);
+		expect(resultingState.missedClients).toStrictEqual(29);
 	});
 	it("2 chairs 1 seat 8 hours", () => {
 		const initialEvents: SimEvent[] = [
