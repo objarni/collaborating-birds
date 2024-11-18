@@ -56,7 +56,7 @@ describe("Barbershop", () => {
 			8 * 60, //minutes
 			barberShopEventHandler,
 		);
-		expect(resultingState.money).toStrictEqual(8000);
-		expect(resultingState.missedClients).toStrictEqual(10);
+		expect(resultingState.money).toStrictEqual(9400);
+		expect(resultingState.missedClients).toStrictEqual(5);
 	});
 });

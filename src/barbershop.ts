@@ -52,8 +52,8 @@ export function barberShopEventHandler(
 				{ kind: "CUSTOMER_ARRIVED", customerName: randomName() },
 				event.time + 9,
 			);
-			const chair = 0;
-			if (systemState.chairs[chair] === "EMPTY") {
+			const chair = systemState.chairs.findIndex((chair) => chair === "EMPTY");
+			if (chair >= 0) {
 				console.log(
 					event.time,
 					`Customer ${event.kind.customerName} is getting hair cut at chair ${chair}.`,
