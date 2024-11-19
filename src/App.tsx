@@ -29,17 +29,19 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 			<h1>Chairs</h1>
 			{state.chairs.map((chair, index) => (
 				<p key={index}>
-					{index + 1}.{" "}
-					{chair.state === "EMPTY" ? "Empty chair" : chair.customerName}
+					<b>{index + 1}. </b>
+					{chair.state === "EMPTY"
+						? "Empty chair"
+						: `${chair.customerName} is getting a haircut`}
 				</p>
 			))}
 			<h1>Sofa</h1>
 			{state.seats.map((seat, index) => (
 				<p key={index}>
-					{index + 1}.
+					<b>{index + 1}. </b>
 					{seat.state === "WAITING_TO_CUT_HAIR"
 						? `${seat.customerName} waiting for hair cut`
-						: "empty seat"}
+						: "Empty seat"}
 				</p>
 			))}
 			<h2>Simulation Time (minutes)</h2>
@@ -79,7 +81,7 @@ function initialSimState(chairs: number, seats: number) {
 
 function App() {
 	const [simState, setSimState] = useState<SimulationState>(
-		initialSimState(1, 1),
+		initialSimState(2, 1),
 	);
 
 	useEffect(() => {
