@@ -77,12 +77,16 @@ export function barberShopEventHandler(
 					events: [nextCustomerArriveEvent, finishedEvent],
 				};
 			}
-			if (systemState.seats[0].state === "EMPTY") {
+			const seat = systemState.seats.findIndex(
+				(seat) => seat.state === "EMPTY",
+			);
+
+			if (seat >= 0) {
 				console.log(
 					event.time,
-					`Customer ${arrivingCustomer} takes a seat to wait for a hair cut.`,
+					`Customer ${arrivingCustomer} takes seat ${seat} to wait for a hair cut.`,
 				);
-				systemState.seats[0] = {
+				systemState.seats[seat] = {
 					state: "WAITING_TO_CUT_HAIR",
 					customerName: arrivingCustomer,
 				};
