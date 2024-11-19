@@ -81,7 +81,7 @@ function initialSimState(chairs: number, seats: number) {
 
 function App() {
 	const [simState, setSimState] = useState<SimulationState>(
-		initialSimState(2, 1),
+		initialSimState(2, 2),
 	);
 
 	useEffect(() => {
