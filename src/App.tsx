@@ -29,7 +29,8 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 			<h1>Chairs</h1>
 			{state.chairs.map((chair, index) => (
 				<p key={index}>
-					{index + 1}. {chair}
+					{index + 1}.{" "}
+					{chair.state === "EMPTY" ? "Empty chair" : chair.customerName}
 				</p>
 			))}
 			<h1>Sofa</h1>
@@ -58,7 +59,7 @@ function initialSimState(chairs: number, seats: number) {
 			time: 0,
 			kind: {
 				kind: "CUSTOMER_ARRIVED",
-				customerName: "A.A",
+				arrivingCustomer: "A.A",
 			},
 		},
 	];
