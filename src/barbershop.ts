@@ -13,8 +13,8 @@ type SeatStates =
 export interface SystemState {
 	missedClients: number;
 	money: number;
-	seats: SeatStates[];
 	chairs: ChairStates[];
+	seats: SeatStates[];
 }
 
 export interface SimEvent {

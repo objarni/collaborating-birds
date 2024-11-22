@@ -33,7 +33,7 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 					{chair.state === "EMPTY" ? (
 						<span className="place">&nbsp;</span>
 					) : (
-						<span className="place occupied">
+						<span key={chair.customerName} className="place occupied">
 							{`${chair.customerName} is getting a haircut`}
 						</span>
 					)}
