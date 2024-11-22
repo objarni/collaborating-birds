@@ -18,14 +18,20 @@
     height: 100px;
 }
 
-.place {
+/*.place {*/
+/*    display: inline-block;*/
+/*    transform: translateX(20px); !* Optional: slight slide effect *!*/
+/*    opacity: 0;*/
+/*}*/
+
+
+.occupied {
     display: inline-block;
-    transform: translateX(20px); /* Optional: slight slide effect */
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-
-.place.occupied {
-    opacity: 1;           /* Fade in to fully visible */
-    transform: translateX(0); /* Return to original position */
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 1.0s ease;
+    @starting-style {
+        opacity: 0;
+        transform: translateX(20px);
+    }
 }

@@ -31,9 +31,9 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 				<p key={index}>
 					<b>{index + 1}. </b>
 					{chair.state === "EMPTY" ? (
-						<span className="place">&nbsp;</span>
+						<span key="empty">&nbsp;</span>
 					) : (
-						<span key={chair.customerName} className="place occupied">
+						<span key={chair.customerName} className="occupied">
 							{`${chair.customerName} is getting a haircut`}
 						</span>
 					)}
@@ -44,9 +44,9 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 				<p key={index}>
 					<b>{index + 1}. </b>
 					{seat.state === "EMPTY" ? (
-						<span className="place">&nbsp;</span>
+						<span key="empty">&nbsp;</span>
 					) : (
-						<span className="place occupied">
+						<span key={seat.customerName} className="occupied">
 							{`${seat.customerName} waiting for hair cut`}
 						</span>
 					)}
