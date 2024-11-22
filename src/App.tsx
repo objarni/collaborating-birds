@@ -10,13 +10,13 @@ import {
 	simStep,
 } from "./barbershop.ts";
 
-const SomeOtherComponent = () => (
-	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-	<svg viewBox="0 0 100 100">
-		<circle cx={20} cy={80} r={20} fill="red" />
-		<circle cx={5} cy={30} r={10} fill="white" />
-	</svg>
-);
+// const SomeOtherComponent = () => (
+// 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+// 	<svg viewBox="0 0 100 100">
+// 		<circle cx={20} cy={80} r={20} fill="red" />
+// 		<circle cx={5} cy={30} r={10} fill="white" />
+// 	</svg>
+// );
 
 interface BarberShopProps {
 	minutes: number;
@@ -30,18 +30,26 @@ function BarberShop({ state, minutes }: BarberShopProps) {
 			{state.chairs.map((chair, index) => (
 				<p key={index}>
 					<b>{index + 1}. </b>
-					{chair.state === "EMPTY"
-						? "Empty chair"
-						: `${chair.customerName} is getting a haircut`}
+					{chair.state === "EMPTY" ? (
+						<span className="place">&nbsp;</span>
+					) : (
+						<span className="place occupied">
+							{`${chair.customerName} is getting a haircut`}
+						</span>
+					)}
 				</p>
 			))}
 			<h1>Sofa</h1>
 			{state.seats.map((seat, index) => (
 				<p key={index}>
 					<b>{index + 1}. </b>
-					{seat.state === "WAITING_TO_CUT_HAIR"
-						? `${seat.customerName} waiting for hair cut`
-						: "Empty seat"}
+					{seat.state === "EMPTY" ? (
+						<span className="place">&nbsp;</span>
+					) : (
+						<span className="place occupied">
+							{`${seat.customerName} waiting for hair cut`}
+						</span>
+					)}
 				</p>
 			))}
 			<h2>Simulation Time (minutes)</h2>
@@ -100,6 +108,7 @@ function App() {
 				{/*<SomeOtherComponent />*/}
 				<BarberShop state={simState.systemState} minutes={simState.time} />
 			</div>
+			<div id="box" />
 		</>
 	);
 }

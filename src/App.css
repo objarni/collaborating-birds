@@ -11,3 +11,21 @@
     width: 50%;
     background-color: aqua;
 }
+
+#box {
+    background-color: deeppink;
+    width: 100px;
+    height: 100px;
+}
+
+.place {
+    display: inline-block;
+    transform: translateX(20px); /* Optional: slight slide effect */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+
+.place.occupied {
+    opacity: 1;           /* Fade in to fully visible */
+    transform: translateX(0); /* Return to original position */
+}
