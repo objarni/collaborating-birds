@@ -108,7 +108,12 @@ function App() {
 				{/*<SomeOtherComponent />*/}
 				<BarberShop state={simState.systemState} minutes={simState.time} />
 			</div>
-			<div id="box" />
+			<div
+				id="box"
+				className={
+					simState.systemState.seats[0].state === "EMPTY" ? "p1" : "p2"
+				}
+			/>
 		</>
 	);
 }

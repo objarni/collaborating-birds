@@ -35,3 +35,16 @@
         transform: translateX(20px);
     }
 }
+
+.p1 {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    transition: all 1.0s ease;
+}
+.p2 {
+    position: absolute;
+    top: 150px;
+    left: 50px;
+    transition: all 1.0s ease;
+}
