@@ -10,11 +10,22 @@ type SeatStates =
 	| { state: "EMPTY" }
 	| { state: "WAITING_TO_CUT_HAIR"; customerName: string };
 
+type Place = {
+	kind: "Chair" | "Sofa";
+	which: number;
+};
+
+type Customer = {
+	name: string;
+	place: Place;
+};
+
 export interface SystemState {
 	missedClients: number;
 	money: number;
 	chairs: ChairStates[];
 	seats: SeatStates[];
+	customers: Customer[];
 }
 
 export interface SimEvent {
@@ -230,6 +241,7 @@ export function initialBarberShopState(
 		missedClients: 0,
 		chairs: chairStates,
 		seats: Array(seats).fill({ state: "EMPTY" }),
+		customers: [],
 	};
 }
 
