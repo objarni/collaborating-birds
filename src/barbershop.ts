@@ -78,6 +78,13 @@ export function barberShopEventHandler(
 					state: "CUTTING_HAIR",
 					customerName: arrivingCustomer,
 				};
+				systemState.customers.push({
+					name: arrivingCustomer,
+					place: {
+						kind: "Chair",
+						which: chair,
+					},
+				});
 				const finishedEvent = getFinishedEvent(
 					event.time,
 					chair,
@@ -88,10 +95,10 @@ export function barberShopEventHandler(
 					events: [nextCustomerArriveEvent, finishedEvent],
 				};
 			}
+
 			const seat = systemState.seats.findIndex(
 				(seat) => seat.state === "EMPTY",
 			);
-
 			if (seat >= 0) {
 				console.log(
 					event.time,
@@ -101,6 +108,13 @@ export function barberShopEventHandler(
 					state: "WAITING_TO_CUT_HAIR",
 					customerName: arrivingCustomer,
 				};
+				systemState.customers.push({
+					name: arrivingCustomer,
+					place: {
+						kind: "Sofa",
+						which: seat,
+					},
+				});
 				return {
 					newSystemState: systemState,
 					events: [nextCustomerArriveEvent],
@@ -119,23 +133,37 @@ export function barberShopEventHandler(
 		case "CUSTOMER_FINISHED": {
 			const chair = event.kind.chair;
 			const finishedCustomer = event.kind.finishedCustomer;
+			systemState.customers = systemState.customers.filter(
+				(customer) => customer.name !== finishedCustomer,
+			);
 			systemState.money += 200;
 			console.log(
 				event.time,
 				`${finishedCustomer}'s hair cut finished at chair ${chair}, shop now has ${systemState.money} SEK.`,
 			);
 			systemState.chairs[chair] = { state: "EMPTY" };
-			if (systemState.seats[0].state === "WAITING_TO_CUT_HAIR") {
-				const seatedCustomer = systemState.seats[0].customerName;
+
+			// Look for waiting customers
+			const seat = 0;
+			if (systemState.seats[seat].state === "WAITING_TO_CUT_HAIR") {
+				const seatedCustomer = systemState.seats[seat].customerName;
+				for (let i = 0; i < systemState.customers.length; i++) {
+					if (systemState.customers[i].name === seatedCustomer) {
+						systemState.customers[i].place = {
+							kind: "Chair",
+							which: chair,
+						};
+					}
+				}
 				const finishedEvent = getFinishedEvent(
 					event.time,
 					chair,
 					seatedCustomer,
 				);
-				systemState.seats[0] = { state: "EMPTY" };
+				systemState.seats[seat] = { state: "EMPTY" };
 				console.log(
 					event.time,
-					`The waiting customer ${seatedCustomer} sat down at chair ${chair}.`,
+					`The waiting customer ${seatedCustomer} at seat ${seat} sat down at chair ${chair}.`,
 				);
 				systemState.chairs[chair] = {
 					state: "CUTTING_HAIR",
