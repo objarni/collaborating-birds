@@ -108,6 +108,14 @@ function App() {
 				{/*<SomeOtherComponent />*/}
 				<BarberShop state={simState.systemState} minutes={simState.time} />
 			</div>
+			{simState.systemState.customers.map((customer) => (
+				<div
+					className={`${customer.place.kind}-${customer.place.which}`}
+					key={customer.name}
+				>
+					{customer.name}
+				</div>
+			))}
 			<div
 				id="box"
 				className={

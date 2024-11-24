@@ -11,7 +11,7 @@ type SeatStates =
 	| { state: "WAITING_TO_CUT_HAIR"; customerName: string };
 
 type Place = {
-	kind: "Chair" | "Sofa";
+	kind: "Chair" | "Seat";
 	which: number;
 };
 
@@ -111,7 +111,7 @@ export function barberShopEventHandler(
 				systemState.customers.push({
 					name: arrivingCustomer,
 					place: {
-						kind: "Sofa",
+						kind: "Seat",
 						which: seat,
 					},
 				});
@@ -144,9 +144,13 @@ export function barberShopEventHandler(
 			systemState.chairs[chair] = { state: "EMPTY" };
 
 			// Look for waiting customers
-			const seat = 0;
-			if (systemState.seats[seat].state === "WAITING_TO_CUT_HAIR") {
-				const seatedCustomer = systemState.seats[seat].customerName;
+			const seatWithWaitingCustomer = systemState.seats.findIndex(
+				(seat) => seat.state === "WAITING_TO_CUT_HAIR",
+			);
+
+			if (seatWithWaitingCustomer >= 0) {
+				const seatedCustomer =
+					systemState.seats[seatWithWaitingCustomer].customerName;
 				for (let i = 0; i < systemState.customers.length; i++) {
 					if (systemState.customers[i].name === seatedCustomer) {
 						systemState.customers[i].place = {
@@ -160,10 +164,10 @@ export function barberShopEventHandler(
 					chair,
 					seatedCustomer,
 				);
-				systemState.seats[seat] = { state: "EMPTY" };
+				systemState.seats[seatWithWaitingCustomer] = { state: "EMPTY" };
 				console.log(
 					event.time,
-					`The waiting customer ${seatedCustomer} at seat ${seat} sat down at chair ${chair}.`,
+					`The waiting customer ${seatedCustomer} at seat ${seatWithWaitingCustomer} sat down at chair ${chair}.`,
 				);
 				systemState.chairs[chair] = {
 					state: "CUTTING_HAIR",

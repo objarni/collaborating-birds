@@ -48,3 +48,28 @@
     left: 50px;
     transition: all 1.0s ease;
 }
+
+.Chair-0 {
+    position: absolute;
+    left: 150px;
+    top: 50px;
+    transition: all 1.0s ease;
+}
+.Chair-1 {
+    position: absolute;
+    left: 150px;
+    top: 100px;
+    transition: all 1.0s ease;
+}
+.Seat-0 {
+    position: absolute;
+    left: 350px;
+    top: 50px;
+    transition: all 1.0s ease;
+}
+.Seat-1 {
+    position: absolute;
+    left: 350px;
+    top: 100px;
+    transition: all 1.0s ease;
+}
