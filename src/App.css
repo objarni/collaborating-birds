@@ -50,24 +50,30 @@
 }
 
 .Chair-0 {
+    background-color: darkred;
+    color: white;
     position: absolute;
     left: 150px;
     top: 50px;
     transition: all 1.0s ease;
 }
 .Chair-1 {
+    background-color: darkred;
+    color: white;
     position: absolute;
     left: 150px;
     top: 100px;
     transition: all 1.0s ease;
 }
 .Seat-0 {
+    background-color: lightslategray;
     position: absolute;
     left: 350px;
     top: 50px;
     transition: all 1.0s ease;
 }
 .Seat-1 {
+    background-color: lightslategray;
     position: absolute;
     left: 350px;
     top: 100px;
