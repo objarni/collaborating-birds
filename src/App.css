@@ -1,15 +1,9 @@
 
-#app {
-    position: fixed;
-    /* center the element */
-    right: 0;
-    left: 0;
-    margin-right: auto;
-    margin-left: auto;
-    /* give it dimensions */
-    min-height: 10em;
-    width: 50%;
-    background-color: aqua;
+
+#statistics {
+    position: absolute;
+    top:0px;
+    left:0px;
 }
 
 .p1 {
@@ -18,6 +12,7 @@
     left: 50px;
     transition: all 1.0s ease;
 }
+
 .p2 {
     position: absolute;
     top: 150px;

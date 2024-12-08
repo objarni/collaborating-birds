@@ -80,7 +80,9 @@ function App() {
 		<>
 			<div id="app">
 				{/*<SomeOtherComponent />*/}
-				<Statistics state={simState.systemState} minutes={simState.time} />
+				<div id="statistics">
+					<Statistics state={simState.systemState} minutes={simState.time} />
+				</div>
 				{simState.systemState.customers.map((customer) => (
 					<div
 						className={`${customer.place.kind}-${customer.place.which}`}
