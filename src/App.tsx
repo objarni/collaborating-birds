@@ -84,6 +84,7 @@ function App() {
 					<label>
 						<input
 							type={"checkbox"}
+							className={"statistics-checkbox"}
 							onChange={() => setShowStats(!showStats)}
 						/>
 						Statistics?
@@ -92,14 +93,16 @@ function App() {
 						<Statistics state={simState.systemState} minutes={simState.time} />
 					)}
 				</div>
-				{simState.systemState.customers.map((customer) => (
-					<div
-						className={`${customer.place.kind}-${customer.place.which}`}
-						key={customer.name}
-					>
-						{customer.name}
-					</div>
-				))}
+				<div id="simulation-display">
+					{simState.systemState.customers.map((customer) => (
+						<div
+							className={`${customer.place.kind}-${customer.place.which}`}
+							key={customer.name}
+						>
+							{customer.name}
+						</div>
+					))}
+				</div>
 			</div>
 		</>
 	);
