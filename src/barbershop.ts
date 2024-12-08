@@ -55,6 +55,13 @@ function getFinishedEvent(
 	};
 }
 
+function findLongestWaitingCustomer(systemState: SystemState) {
+	for (let i = systemState.seats.length - 1; i >= 0; i--) {
+		if (systemState.seats[i].state === "WAITING_TO_CUT_HAIR") return i;
+	}
+	return -1;
+}
+
 export function barberShopEventHandler(
 	systemState: SystemState,
 	event: SimEvent,
@@ -142,11 +149,7 @@ export function barberShopEventHandler(
 				`${finishedCustomer}'s hair cut finished at chair ${chair}, shop now has ${systemState.money} SEK.`,
 			);
 			systemState.chairs[chair] = { state: "EMPTY" };
-
-			// Look for waiting customers
-			const seatWithWaitingCustomer = systemState.seats.findIndex(
-				(seat) => seat.state === "WAITING_TO_CUT_HAIR",
-			);
+			const seatWithWaitingCustomer = findLongestWaitingCustomer(systemState);
 
 			if (seatWithWaitingCustomer >= 0) {
 				if (
