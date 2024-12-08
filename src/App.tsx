@@ -26,19 +26,6 @@ interface BarberShopProps {
 function Statistics({ state, minutes }: BarberShopProps) {
 	return (
 		<div>
-			<h1>Sofa</h1>
-			{state.seats.map((seat, index) => (
-				<p key={index}>
-					<b>{index + 1}. </b>
-					{seat.state === "EMPTY" ? (
-						<span key="empty">&nbsp;</span>
-					) : (
-						<span key={seat.customerName} className="occupied">
-							{`${seat.customerName} waiting for hair cut`}
-						</span>
-					)}
-				</p>
-			))}
 			<h2>Simulation Time (minutes)</h2>
 			{minutes}
 			<h2>Missed clients</h2>
