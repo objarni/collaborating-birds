@@ -62,6 +62,7 @@ function initialSimState(chairs: number, seats: number) {
 }
 
 function App() {
+	const [showStats, setShowStats] = useState(false);
 	const [simState, setSimState] = useState<SimulationState>(
 		initialSimState(2, 2),
 	);
@@ -79,9 +80,17 @@ function App() {
 	return (
 		<>
 			<div id="app">
-				{/*<SomeOtherComponent />*/}
 				<div id="statistics">
-					<Statistics state={simState.systemState} minutes={simState.time} />
+					<label>
+						<input
+							type={"checkbox"}
+							onChange={() => setShowStats(!showStats)}
+						/>
+						Statistics?
+					</label>
+					{showStats && (
+						<Statistics state={simState.systemState} minutes={simState.time} />
+					)}
 				</div>
 				{simState.systemState.customers.map((customer) => (
 					<div
