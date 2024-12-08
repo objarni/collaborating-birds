@@ -81,15 +81,15 @@ function App() {
 			<div id="app">
 				{/*<SomeOtherComponent />*/}
 				<Statistics state={simState.systemState} minutes={simState.time} />
+				{simState.systemState.customers.map((customer) => (
+					<div
+						className={`${customer.place.kind}-${customer.place.which}`}
+						key={customer.name}
+					>
+						{customer.name}
+					</div>
+				))}
 			</div>
-			{simState.systemState.customers.map((customer) => (
-				<div
-					className={`${customer.place.kind}-${customer.place.which}`}
-					key={customer.name}
-				>
-					{customer.name}
-				</div>
-			))}
 		</>
 	);
 }
