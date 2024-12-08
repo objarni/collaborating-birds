@@ -12,30 +12,6 @@
     background-color: aqua;
 }
 
-#box {
-    background-color: deeppink;
-    width: 100px;
-    height: 100px;
-}
-
-/*.place {*/
-/*    display: inline-block;*/
-/*    transform: translateX(20px); !* Optional: slight slide effect *!*/
-/*    opacity: 0;*/
-/*}*/
-
-
-.occupied {
-    display: inline-block;
-    opacity: 1;
-    transform: translateX(0);
-    transition: all 1.0s ease;
-    @starting-style {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-}
-
 .p1 {
     position: absolute;
     top: 50px;
