@@ -149,14 +149,19 @@ export function barberShopEventHandler(
 			);
 
 			if (seatWithWaitingCustomer >= 0) {
-				const seatedCustomer =
-					systemState.seats[seatWithWaitingCustomer].customerName;
-				for (let i = 0; i < systemState.customers.length; i++) {
-					if (systemState.customers[i].name === seatedCustomer) {
-						systemState.customers[i].place = {
-							kind: "Chair",
-							which: chair,
-						};
+				if (
+					systemState.seats[seatWithWaitingCustomer].state ===
+					"WAITING_TO_CUT_HAIR"
+				) {
+					const seatedCustomer =
+						systemState.seats[seatWithWaitingCustomer].customerName;
+					for (let i = 0; i < systemState.customers.length; i++) {
+						if (systemState.customers[i].name === seatedCustomer) {
+							systemState.customers[i].place = {
+								kind: "Chair",
+								which: chair,
+							};
+						}
 					}
 				}
 				const finishedEvent = getFinishedEvent(
