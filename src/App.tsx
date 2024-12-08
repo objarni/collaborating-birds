@@ -23,7 +23,7 @@ interface BarberShopProps {
 	state: SystemState;
 }
 
-function BarberShop({ state, minutes }: BarberShopProps) {
+function Statistics({ state, minutes }: BarberShopProps) {
 	return (
 		<div>
 			<h1>Chairs</h1>
@@ -106,7 +106,7 @@ function App() {
 		<>
 			<div id="app">
 				{/*<SomeOtherComponent />*/}
-				<BarberShop state={simState.systemState} minutes={simState.time} />
+				<Statistics state={simState.systemState} minutes={simState.time} />
 			</div>
 			{simState.systemState.customers.map((customer) => (
 				<div
