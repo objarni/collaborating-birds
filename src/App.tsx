@@ -93,7 +93,7 @@ function App() {
 						<Statistics state={simState.systemState} minutes={simState.time} />
 					)}
 				</div>
-				<div id="simulation-display">
+				<div id="simulation">
 					{simState.systemState.customers.map((customer) => (
 						<div
 							className={`${customer.place.kind}-${customer.place.which}`}

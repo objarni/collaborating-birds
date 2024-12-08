@@ -14,7 +14,7 @@
     float: left;
 }
 
-#simulation-display {
+#simulation {
     display: inline-block;
     position: relative;
     width: 800px;
