@@ -163,25 +163,25 @@ export function barberShopEventHandler(
 							};
 						}
 					}
+					const finishedEvent = getFinishedEvent(
+						event.time,
+						chair,
+						seatedCustomer,
+					);
+					systemState.seats[seatWithWaitingCustomer] = { state: "EMPTY" };
+					console.log(
+						event.time,
+						`The waiting customer ${seatedCustomer} at seat ${seatWithWaitingCustomer} sat down at chair ${chair}.`,
+					);
+					systemState.chairs[chair] = {
+						state: "CUTTING_HAIR",
+						customerName: seatedCustomer,
+					};
+					return {
+						newSystemState: systemState,
+						events: [finishedEvent],
+					};
 				}
-				const finishedEvent = getFinishedEvent(
-					event.time,
-					chair,
-					seatedCustomer,
-				);
-				systemState.seats[seatWithWaitingCustomer] = { state: "EMPTY" };
-				console.log(
-					event.time,
-					`The waiting customer ${seatedCustomer} at seat ${seatWithWaitingCustomer} sat down at chair ${chair}.`,
-				);
-				systemState.chairs[chair] = {
-					state: "CUTTING_HAIR",
-					customerName: seatedCustomer,
-				};
-				return {
-					newSystemState: systemState,
-					events: [finishedEvent],
-				};
 			}
 			return {
 				newSystemState: systemState,
