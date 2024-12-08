@@ -9,8 +9,14 @@
     display: none;
 }
 
+.subtle-border {
+    padding: 2px;
+    margin: 0;
+    border: 1px solid lightgray;
+}
+
 #statistics {
-    background-color: aqua;
+    background-color: lightgreen;
     width: 200px;
     float: left;
     font-size: small;
