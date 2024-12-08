@@ -90,12 +90,6 @@ function App() {
 					{customer.name}
 				</div>
 			))}
-			<div
-				id="box"
-				className={
-					simState.systemState.seats[0].state === "EMPTY" ? "p1" : "p2"
-				}
-			/>
 		</>
 	);
 }
