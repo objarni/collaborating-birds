@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@types/tweenjs": "^1.0.8",
-    "priority-queue-typescript": "https://github.com/objarni/PriorityQueue",
+    "priority-queue-typescript": "^2.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tweenjs": "^1.0.2"
