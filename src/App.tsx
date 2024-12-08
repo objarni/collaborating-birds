@@ -87,7 +87,7 @@ function App() {
 							className={"statistics-checkbox"}
 							onChange={() => setShowStats(!showStats)}
 						/>
-						Statistics?
+						<h2>Statistics?</h2>
 					</label>
 					{showStats && (
 						<Statistics state={simState.systemState} minutes={simState.time} />

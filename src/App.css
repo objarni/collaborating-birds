@@ -2,6 +2,7 @@
     width: 100%;
     height: 100%;
     margin: 0;
+    font-size: large;
 }
 
 .statistics-checkbox {
@@ -12,6 +13,7 @@
     background-color: aqua;
     width: 200px;
     float: left;
+    font-size: small;
 }
 
 #simulation {
