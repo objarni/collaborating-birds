@@ -9,12 +9,6 @@
     display: none;
 }
 
-.subtle-border {
-    padding: 2px;
-    margin: 0;
-    border: 1px solid lightgray;
-}
-
 #statistics {
     background-color: lightgreen;
     width: 200px;
@@ -23,17 +17,23 @@
     user-select: none;
 }
 
-h2 {
-    font-family: sans-serif;
-    font-size: 16px;
-}
-
 #simulation {
     display: inline-block;
     position: relative;
     width: 500px;
     height: 600px;
     background-color: lightcyan;
+}
+
+h2 {
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.subtle-border {
+    padding: 2px;
+    margin: 0;
+    border: 1px solid lightgray;
 }
 
 .client {
@@ -50,6 +50,7 @@ h2 {
     top: 50px;
     transition: all 1.0s ease;
 }
+
 .Chair-1 {
     background-color: blueviolet;
     color: white;
@@ -58,6 +59,7 @@ h2 {
     top: 100px;
     transition: all 1.0s ease;
 }
+
 .Seat-0 {
     background-color: lightcoral;
     position: absolute;
@@ -65,6 +67,7 @@ h2 {
     top: 50px;
     transition: all 1.0s ease;
 }
+
 .Seat-1 {
     background-color: lightcoral;
     position: absolute;
