@@ -88,7 +88,7 @@ function App() {
 				<div id="simulation">
 					{simState.systemState.customers.map((customer) => (
 						<div
-							className={`${customer.place.kind}-${customer.place.which}`}
+							className={`client ${customer.place.kind}-${customer.place.which}`}
 							key={customer.name}
 						>
 							{customer.name}

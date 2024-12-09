@@ -36,6 +36,12 @@ h2 {
     background-color: lightcyan;
 }
 
+.client {
+    padding: 10px;
+    border: 3px solid black ;
+    border-radius: 25%;
+}
+
 .Chair-0 {
     background-color: blueviolet;
     color: white;
