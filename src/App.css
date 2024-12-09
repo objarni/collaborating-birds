@@ -72,7 +72,7 @@ h2 {
     background-color: blueviolet;
     color: white;
     position: absolute;
-    left: 50px;
+    left: 38px;
     top: 50px;
     transition: all 1.0s ease;
 }
@@ -81,7 +81,7 @@ h2 {
     background-color: blueviolet;
     color: white;
     position: absolute;
-    left: 50px;
+    left: 38px;
     top: 120px;
     transition: all 1.0s ease;
 }
@@ -89,7 +89,7 @@ h2 {
 .Seat-0 {
     background-color: lightcoral;
     position: absolute;
-    left: 250px;
+    left: 240px;
     top: 50px;
     transition: all 1.0s ease;
 }
@@ -97,7 +97,7 @@ h2 {
 .Seat-1 {
     background-color: lightcoral;
     position: absolute;
-    left: 250px;
+    left: 240px;
     top: 120px;
     transition: all 1.0s ease;
 }
