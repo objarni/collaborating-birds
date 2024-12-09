@@ -18,7 +18,7 @@
 .simulation {
     display: inline-block;
     position: relative;
-    width: 350px;
+    width: 360px;
     height: 350px;
     background-color: lightcyan;
 }
