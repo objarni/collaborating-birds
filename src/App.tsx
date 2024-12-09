@@ -53,6 +53,25 @@ function initialSimState(chairs: number, seats: number) {
 	};
 }
 
+function Person() {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 100 150"
+			width="30"
+			height="40"
+		>
+			<title>Person Icon</title>
+			<circle cx="50" cy="30" r="15" fill="black" />
+			<line x1="50" y1="45" x2="50" y2="90" stroke="black" stroke-width="5" />
+			<line x1="50" y1="60" x2="20" y2="80" stroke="black" stroke-width="5" />
+			<line x1="50" y1="60" x2="80" y2="80" stroke="black" stroke-width="5" />
+			<line x1="50" y1="90" x2="30" y2="130" stroke="black" stroke-width="5" />
+			<line x1="50" y1="90" x2="70" y2="130" stroke="black" stroke-width="5" />
+		</svg>
+	);
+}
+
 function App() {
 	const [showStats, setShowStats] = useState(false);
 	const [simState, setSimState] = useState<SimulationState>(
@@ -94,6 +113,7 @@ function App() {
 							key={customer.name}
 						>
 							{customer.name}
+							<Person />
 						</div>
 					))}
 				</div>
