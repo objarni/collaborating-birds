@@ -10,14 +10,6 @@ import {
 	simStep,
 } from "./barbershop.ts";
 
-// const SomeOtherComponent = () => (
-// 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-// 	<svg viewBox="0 0 100 100">
-// 		<circle cx={20} cy={80} r={20} fill="red" />
-// 		<circle cx={5} cy={30} r={10} fill="white" />
-// 	</svg>
-// );
-
 interface BarberShopProps {
 	minutes: number;
 	state: SystemState;
