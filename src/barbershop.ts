@@ -14,7 +14,7 @@ type ChairStates =
 
 type SeatStates =
 	| { state: "EMPTY" }
-	| { state: "WAITING_TO_CUT_HAIR"; customerName: string };
+	| { state: "WAITING_TO_CUT_HAIR"; customerName: string; sitDownTime: number };
 
 type BarberShopEvent =
 	| { kind: "CUSTOMER_ARRIVED"; arrivingCustomer: string }
@@ -58,10 +58,18 @@ function getFinishedEvent(
 }
 
 function findLongestWaitingCustomer(systemState: SystemState) {
+	let longestWaitingCustomer = -1;
+	let earliestSitDownTime = Number.POSITIVE_INFINITY;
 	for (let i = systemState.seats.length - 1; i >= 0; i--) {
-		if (systemState.seats[i].state === "WAITING_TO_CUT_HAIR") return i;
+		const seat = systemState.seats[i];
+		if (seat.state === "WAITING_TO_CUT_HAIR") {
+			if (seat.sitDownTime < earliestSitDownTime) {
+				longestWaitingCustomer = i;
+				earliestSitDownTime = seat.sitDownTime;
+			}
+		}
 	}
-	return -1;
+	return longestWaitingCustomer;
 }
 
 export function barberShopEventHandler(
@@ -116,6 +124,7 @@ export function barberShopEventHandler(
 				systemState.seats[seat] = {
 					state: "WAITING_TO_CUT_HAIR",
 					customerName: arrivingCustomer,
+					sitDownTime: event.time,
 				};
 				systemState.customers.push({
 					name: arrivingCustomer,
