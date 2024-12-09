@@ -23,6 +23,34 @@
     background-color: lightcyan;
 }
 
+.chairs {
+    position: absolute;
+    padding: 10px;
+    background-color: lightpink;
+    border-radius: 5px;
+    width: 100px;
+    height: 220px;
+    text-align: center;
+    top: 10px;
+    left: 20px;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.sofa {
+    position: absolute;
+    padding: 10px;
+    background-color: lightgray;
+    border-radius: 5px;
+    width: 100px;
+    height: 220px;
+    text-align: center;
+    top: 10px;
+    left: 220px;
+    font-size: x-large;
+    font-weight: bold;
+}
+
 h2 {
     font-family: sans-serif;
     font-size: 16px;

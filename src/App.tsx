@@ -86,6 +86,8 @@ function App() {
 					)}
 				</div>
 				<div className={"simulation"}>
+					<div className={"chairs"}>Chairs</div>
+					<div className={"sofa"}>Sofa</div>
 					{simState.systemState.customers.map((customer) => (
 						<div
 							className={`client ${customer.place.kind}-${customer.place.which}`}
