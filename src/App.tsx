@@ -72,7 +72,7 @@ function App() {
 	return (
 		<>
 			<div id="app">
-				<div id="statistics">
+				<div className={"statistics"}>
 					<label>
 						<input
 							type={"checkbox"}

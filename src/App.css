@@ -9,7 +9,7 @@
     display: none;
 }
 
-#statistics {
+.statistics {
     background-color: lightgreen;
     width: 200px;
     float: left;
