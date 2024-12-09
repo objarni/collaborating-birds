@@ -82,7 +82,7 @@ h2 {
     color: white;
     position: absolute;
     left: 50px;
-    top: 100px;
+    top: 120px;
     transition: all 1.0s ease;
 }
 
@@ -98,6 +98,6 @@ h2 {
     background-color: lightcoral;
     position: absolute;
     left: 250px;
-    top: 100px;
+    top: 120px;
     transition: all 1.0s ease;
 }
