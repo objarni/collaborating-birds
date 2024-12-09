@@ -112,8 +112,8 @@ function App() {
 							className={`client ${customer.place.kind}-${customer.place.which}`}
 							key={customer.name}
 						>
-							{customer.name}
 							<Person />
+							<div className={""}>{customer.name}</div>
 						</div>
 					))}
 				</div>
