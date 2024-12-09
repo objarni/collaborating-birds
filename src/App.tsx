@@ -71,7 +71,7 @@ function App() {
 
 	return (
 		<>
-			<div id="app">
+			<div className={"app"}>
 				<div className={"statistics"}>
 					<label>
 						<input
@@ -85,7 +85,7 @@ function App() {
 						<Statistics state={simState.systemState} minutes={simState.time} />
 					)}
 				</div>
-				<div id="simulation">
+				<div className={"simulation"}>
 					{simState.systemState.customers.map((customer) => (
 						<div
 							className={`client ${customer.place.kind}-${customer.place.which}`}
