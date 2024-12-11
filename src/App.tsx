@@ -65,11 +65,11 @@ function Person() {
 		>
 			<title>Person Icon</title>
 			<circle cx="50" cy="30" r="15" fill="black" />
-			<line x1="50" y1="45" x2="50" y2="90" stroke="black" stroke-width="5" />
-			<line x1="50" y1="60" x2="20" y2="80" stroke="black" stroke-width="5" />
-			<line x1="50" y1="60" x2="80" y2="80" stroke="black" stroke-width="5" />
-			<line x1="50" y1="90" x2="30" y2="130" stroke="black" stroke-width="5" />
-			<line x1="50" y1="90" x2="70" y2="130" stroke="black" stroke-width="5" />
+			<line x1="50" y1="45" x2="50" y2="90" stroke="black" strokeWidth="5" />
+			<line x1="50" y1="60" x2="20" y2="80" stroke="black" strokeWidth="5" />
+			<line x1="50" y1="60" x2="80" y2="80" stroke="black" strokeWidth="5" />
+			<line x1="50" y1="90" x2="30" y2="130" stroke="black" strokeWidth="5" />
+			<line x1="50" y1="90" x2="70" y2="130" stroke="black" strokeWidth="5" />
 		</svg>
 	);
 }
@@ -82,13 +82,14 @@ function App() {
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
+			if (showStats) return;
 			const newSimState = simStep(simState, 1, barberShopEventHandler);
 			setSimState(newSimState);
 		}, 300); // 1000 milliseconds = 1 second
 
 		// Cleanup function to clear interval when the component unmounts
 		return () => clearInterval(intervalId);
-	}, [simState]);
+	}, [simState, showStats]);
 
 	return (
 		<>
