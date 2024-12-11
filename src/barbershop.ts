@@ -17,7 +17,8 @@ type SeatStates =
 	| { state: "WAITING_TO_CUT_HAIR"; customerName: string; sitDownTime: number };
 
 type BarberShopEvent =
-	| { kind: "CUSTOMER_DECIDED"; arrivingCustomer: string }
+	| { kind: "CUSTOMER_ARRIVED"; arrivingCustomer: string }
+	| { kind: "CUSTOMER_DECIDED"; decidedCustomer: string }
 	| { kind: "CUSTOMER_FINISHED"; finishedCustomer: string; chair: number };
 
 type Customer = {
@@ -77,15 +78,28 @@ export function barberShopEventHandler(
 	event: SimEvent,
 ): { newSystemState: SystemState; events: SimEvent[] } {
 	switch (event.kind.kind) {
+		case "CUSTOMER_ARRIVED": {
+			const customerDecisionEvent = E(
+				{
+					kind: "CUSTOMER_DECIDED",
+					decidedCustomer: event.kind.arrivingCustomer,
+				},
+				event.time + 1,
+			);
+			return {
+				newSystemState: systemState,
+				events: [customerDecisionEvent],
+			};
+		}
 		case "CUSTOMER_DECIDED": {
 			const nextCustomerArriveEvent = E(
-				{ kind: "CUSTOMER_DECIDED", arrivingCustomer: randomName() },
-				event.time + 9,
+				{ kind: "CUSTOMER_ARRIVED", arrivingCustomer: randomName() },
+				event.time + 8,
 			);
 			const chair = systemState.chairs.findIndex(
 				(chair) => chair.state === "EMPTY",
 			);
-			const arrivingCustomer = event.kind.arrivingCustomer;
+			const arrivingCustomer = event.kind.decidedCustomer;
 			if (chair >= 0) {
 				console.log(
 					event.time,
