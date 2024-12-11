@@ -1,4 +1,5 @@
 import "./App.css";
+import { PriorityQueue } from "priority-queue-typescript";
 import { useEffect, useState } from "react";
 import {
 	type SimEvent,
