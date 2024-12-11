@@ -20,10 +20,12 @@ function Statistics({ state, minutes }: BarberShopProps) {
 		<div>
 			<h2>Simulation Time (minutes)</h2>
 			{minutes}
-			<h2>Missed clients</h2>
+			<h2>Missed customers</h2>
 			{state.missedClients}
 			<h2>Cash total (SEK)</h2>
 			{state.money}
+			<h2>Active customers</h2>
+			{state.customers.length}
 		</div>
 	);
 }

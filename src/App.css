@@ -102,9 +102,10 @@ h2 {
     transition: all 1.0s ease;
 }
 
-.AtWindow {
-    background-color: lightblue;
+.AtWindow-0 {
+    background-color: blue;
     position: absolute;
     left: 140px;
     top: 300px;
+    transition: all 1.0s ease;
 }

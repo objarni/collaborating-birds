@@ -103,6 +103,9 @@ export function barberShopEventHandler(
 			};
 		}
 		case "CUSTOMER_DECIDED": {
+			// check is a chair (primarily) or sofa seat (secondarily) is empty
+			// if not, customer leaves
+
 			const nextCustomerArriveEvent = E(
 				{ kind: "CUSTOMER_ARRIVED", arrivingCustomer: randomName() },
 				event.time + 8,
@@ -156,28 +159,41 @@ export function barberShopEventHandler(
 					customerName: decidedCustomer,
 					sitDownTime: event.time,
 				};
-				systemState.customers.push({
+
+				const newPlace: Place = {
+					kind: "Seat",
+					which: seat,
+				};
+				const newCustomer: Customer = {
 					name: decidedCustomer,
-					place: {
-						kind: "Seat",
-						which: seat,
-					},
-				});
+					place: newPlace,
+				};
+				systemState.customers = systemState.customers.map((customer) =>
+					customer.name === decidedCustomer ? newCustomer : customer,
+				);
+
 				return {
 					newSystemState: systemState,
 					events: [nextCustomerArriveEvent],
 				};
 			}
+
 			console.log(
 				event.time,
 				`${decidedCustomer} arrived, and left - barber shop is busy.`,
 			);
+			systemState.customers = systemState.customers.filter(
+				(customer) => customer.name !== decidedCustomer,
+			);
+
 			systemState.missedClients += 1;
+
 			return {
 				newSystemState: systemState,
 				events: [nextCustomerArriveEvent],
 			};
 		}
+
 		case "CUSTOMER_FINISHED": {
 			const chair = event.kind.chair;
 			const finishedCustomer = event.kind.finishedCustomer;
