@@ -1,5 +1,4 @@
 import "./App.css";
-import PriorityQueue from "priority-queue-typescript";
 import { useEffect, useState } from "react";
 import {
 	type SimEvent,
@@ -92,33 +91,31 @@ function App() {
 
 	return (
 		<>
-			<div className={"app"}>
-				<div className={"statistics"}>
-					<label>
-						<input
-							type={"checkbox"}
-							className={"statistics-checkbox"}
-							onChange={() => setShowStats(!showStats)}
-						/>
-						<h2 className={"subtle-border"}>Statistics?</h2>
-					</label>
-					{showStats && (
-						<Statistics state={simState.systemState} minutes={simState.time} />
-					)}
-				</div>
-				<div className={"simulation"}>
-					<div className={"chairs"}>Chairs</div>
-					<div className={"sofa"}>Sofa</div>
-					{simState.systemState.customers.map((customer) => (
-						<div
-							className={`client ${customer.place.kind}-${customer.place.which}`}
-							key={customer.name}
-						>
-							<Person />
-							<div className={""}>{customer.name}</div>
-						</div>
-					))}
-				</div>
+			<div className={"simulation"}>
+				<div className={"chairs"}>Chairs</div>
+				<div className={"sofa"}>Sofa</div>
+				{simState.systemState.customers.map((customer) => (
+					<div
+						className={`client ${customer.place.kind}-${customer.place.which}`}
+						key={customer.name}
+					>
+						<Person />
+						<div className={""}>{customer.name}</div>
+					</div>
+				))}
+			</div>
+			<div className={"statistics"}>
+				<label>
+					<input
+						type={"checkbox"}
+						className={"statistics-checkbox"}
+						onChange={() => setShowStats(!showStats)}
+					/>
+					<h2 className={"subtle-border"}>Statistics?</h2>
+				</label>
+				{showStats && (
+					<Statistics state={simState.systemState} minutes={simState.time} />
+				)}
 			</div>
 		</>
 	);

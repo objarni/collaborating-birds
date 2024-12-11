@@ -1,4 +1,4 @@
-import PriorityQueue from "priority-queue-typescript";
+import { PriorityQueue } from "priority-queue-typescript";
 
 export interface SystemState {
 	missedClients: number;
