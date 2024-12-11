@@ -34,7 +34,7 @@ function initialSimState(chairs: number, seats: number) {
 		{
 			time: 0,
 			kind: {
-				kind: "CUSTOMER_DECIDED",
+				kind: "CUSTOMER_ARRIVED",
 				arrivingCustomer: "A.A",
 			},
 		},
