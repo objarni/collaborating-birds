@@ -1477,10 +1477,10 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
-priority-queue-typescript@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/priority-queue-typescript/-/priority-queue-typescript-2.0.1.tgz#21143f93b24062a10bd5cf176367ad00423452ea"
-  integrity sha512-iQ1OoQ2IE3IcM/vGaiwhfJJd0DgPBUz5+4a9dLk2CZDcYlu4eYlue/gVfquwqh0xFDjJA2ce+9IMczBg4Yp1AQ==
+priority-queue-typescript@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/priority-queue-typescript/-/priority-queue-typescript-2.0.3.tgz#0c7f46a97758a84c64ef4acc754b50f759413dba"
+  integrity sha512-/0vW1F1dahvFb+63HMNkAG2kW6MHNELy6mZ2MsOgxQke3/EbVUV9bjRZUgQDaIFG22O2/C7r1mBbsFiTA/iFBw==
 
 punycode@^2.1.0:
   version "2.3.1"
