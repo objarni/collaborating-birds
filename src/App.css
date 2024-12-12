@@ -1,26 +1,27 @@
 .app {
-    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
     font-size: large;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    border: 1px dotted black;
 }
 
 .simulation {
-    display: inline-block;
-    position: relative;
     width: 360px;
     height: 350px;
     background-color: lightcyan;
 }
 
-.statistics-checkbox {
-    display: none;
-}
-
 .statistics {
-    display: inline-block;
-    background-color: lightgreen;
     width: 200px;
+    background-color: lightgreen;
     font-size: small;
     user-select: none;
+}
+
+.statistics-checkbox {
+    display: none;
 }
 
 .chairs {

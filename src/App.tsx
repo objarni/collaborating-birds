@@ -92,7 +92,7 @@ function App() {
 	}, [simState, showStats]);
 
 	return (
-		<>
+		<div className="app">
 			<div className={"simulation"}>
 				<div className={"chairs"}>Chairs</div>
 				<div className={"sofa"}>Sofa</div>
@@ -119,7 +119,7 @@ function App() {
 					<Statistics state={simState.systemState} minutes={simState.time} />
 				)}
 			</div>
-		</>
+		</div>
 	);
 }
 
