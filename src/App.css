@@ -3,24 +3,24 @@
     font-size: large;
 }
 
-.statistics-checkbox {
-    display: none;
-}
-
-.statistics {
-    background-color: lightgreen;
-    width: 200px;
-    float: left;
-    font-size: small;
-    user-select: none;
-}
-
 .simulation {
     display: inline-block;
     position: relative;
     width: 360px;
     height: 350px;
     background-color: lightcyan;
+}
+
+.statistics-checkbox {
+    display: none;
+}
+
+.statistics {
+    display: inline-block;
+    background-color: lightgreen;
+    width: 200px;
+    font-size: small;
+    user-select: none;
 }
 
 .chairs {
