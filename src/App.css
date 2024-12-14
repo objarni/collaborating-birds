@@ -2,6 +2,7 @@
     --seat-x: 240px;
     --chair-x: 38px;
     --row-0-y: 50px;
+    --row-1-y: 150px
 }
 
 .app {
@@ -89,7 +90,7 @@ h2 {
     color: white;
     position: absolute;
     left: var(--chair-x);
-    top: 150px;
+    top: var(--row-1-y);
     transition: all 1.0s ease;
 }
 
@@ -105,7 +106,7 @@ h2 {
     background-color: lightcoral;
     position: absolute;
     left: var(--seat-x);
-    top: 150px;
+    top: var(--row-1-y);
     transition: all 1.0s ease;
 }
 
