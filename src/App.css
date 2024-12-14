@@ -1,3 +1,9 @@
+:root {
+    --seat-x: 240px;
+    --chair-x: 38px;
+    --row-0-y: 50px;
+}
+
 .app {
     display: flex;
     flex-direction: row;
@@ -73,8 +79,8 @@ h2 {
     background-color: blueviolet;
     color: white;
     position: absolute;
-    left: 38px;
-    top: 50px;
+    left: var(--chair-x);
+    top: var(--row-0-y);
     transition: all 1.0s ease;
 }
 
@@ -82,7 +88,7 @@ h2 {
     background-color: blueviolet;
     color: white;
     position: absolute;
-    left: 38px;
+    left: var(--chair-x);
     top: 150px;
     transition: all 1.0s ease;
 }
@@ -90,15 +96,15 @@ h2 {
 .Seat-0 {
     background-color: lightcoral;
     position: absolute;
-    left: 240px;
-    top: 50px;
+    left: var(--seat-x);
+    top: var(--row-0-y);
     transition: all 1.0s ease;
 }
 
 .Seat-1 {
     background-color: lightcoral;
     position: absolute;
-    left: 240px;
+    left: var(--seat-x);
     top: 150px;
     transition: all 1.0s ease;
 }
