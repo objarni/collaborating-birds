@@ -7,6 +7,7 @@ import type {
 	Customer,
 	Place,
 } from "./barbershop.types.ts";
+import type { SimulationState } from "./discrete-event-simulation-typescript/simulationstate.ts";
 
 function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
 	return {
@@ -221,12 +222,6 @@ export function barberShopEventHandler(
 			};
 		}
 	}
-}
-
-export interface SimulationState<EventType extends object, SystemStateType> {
-	eventQueue: PriorityQueue<EventType>;
-	systemState: SystemStateType;
-	time: number;
 }
 
 export type BarberShopSimState = SimulationState<
