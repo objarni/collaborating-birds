@@ -27,7 +27,7 @@ function getFinishedEvent(
 			chair,
 			finishedCustomer: customerName,
 		},
-		time: now + 20,
+		time: now + randomRange(15, 60),
 	};
 }
 
@@ -44,6 +44,10 @@ function findLongestWaitingCustomer(systemState: BarberShopState) {
 		}
 	}
 	return longestWaitingCustomer;
+}
+
+function randomRange(a: number, b: number) {
+	return Math.random() * (b - a) + a;
 }
 
 export function barberShopEventHandler(
@@ -84,7 +88,7 @@ export function barberShopEventHandler(
 					kind: "CUSTOMER_ARRIVED",
 					arrivingCustomer: randomName(systemState.customers),
 				},
-				event.time + 8,
+				event.time + randomRange(2, 20),
 			);
 			const chair = systemState.chairs.findIndex(
 				(chair) => chair.state === "EMPTY",
