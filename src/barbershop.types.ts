@@ -1,3 +1,5 @@
+import type { SimEvent } from "./simevent.ts";
+
 export interface BarberShopState {
 	missedClients: number;
 	money: number;
@@ -28,10 +30,5 @@ export type Place = {
 	kind: "Chair" | "Seat" | "AtWindow";
 	which: number;
 };
-
-interface SimEvent<T> {
-	time: number;
-	kind: T;
-}
 
 export type BarberShopSimEvent = SimEvent<BarberShopEvent>;
