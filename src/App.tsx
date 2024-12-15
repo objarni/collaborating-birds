@@ -7,7 +7,7 @@ import {
 	initialBarberShopState,
 	simStep,
 } from "./barbershop.ts";
-import type { SimEvent, SystemState } from "./barbershop.types.ts";
+import type { BarbershopEvent, SystemState } from "./barbershop.types.ts";
 
 interface BarberShopProps {
 	minutes: number;
@@ -31,7 +31,7 @@ function Statistics({ state, minutes }: BarberShopProps) {
 
 function initialSimState(chairs: number, seats: number) {
 	const initialSystemState = initialBarberShopState(chairs, seats);
-	const initialEvents: SimEvent[] = [
+	const initialEvents: BarbershopEvent[] = [
 		{
 			time: 0,
 			kind: {
@@ -40,9 +40,9 @@ function initialSimState(chairs: number, seats: number) {
 			},
 		},
 	];
-	const eventQueue = new PriorityQueue<SimEvent>(
+	const eventQueue = new PriorityQueue<BarbershopEvent>(
 		10, // initial capability of queue
-		(a: SimEvent, b: SimEvent) => a.time - b.time,
+		(a: BarbershopEvent, b: BarbershopEvent) => a.time - b.time,
 	);
 	for (const event of initialEvents) {
 		eventQueue.add(event);
