@@ -223,11 +223,16 @@ export function barberShopEventHandler(
 	}
 }
 
-export interface SimulationState {
-	eventQueue: PriorityQueue<BarberShopSimEvent>;
-	systemState: BarberShopState;
+export interface SimulationState<EventType extends object, SystemStateType> {
+	eventQueue: PriorityQueue<EventType>;
+	systemState: SystemStateType;
 	time: number;
 }
+
+export type BarberShopSimState = SimulationState<
+	BarberShopSimEvent,
+	BarberShopState
+>;
 
 export function simulate(
 	initialEvents: BarberShopSimEvent[],
@@ -262,7 +267,7 @@ export function simulate(
 }
 
 export function simStep(
-	simulationState: SimulationState,
+	simulationState: BarberShopSimState,
 	deltaTimeMinutes: number,
 	handleEvent: (
 		state: BarberShopState,
@@ -271,7 +276,7 @@ export function simStep(
 		newSystemState: BarberShopState;
 		events: BarberShopSimEvent[];
 	},
-): SimulationState {
+): BarberShopSimState {
 	const newTime = simulationState.time + deltaTimeMinutes;
 	while (true) {
 		const nextEvent = simulationState.eventQueue.poll();

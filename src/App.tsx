@@ -2,7 +2,7 @@ import "./App.css";
 import { PriorityQueue } from "priority-queue-typescript";
 import { useEffect, useState } from "react";
 import {
-	type SimulationState,
+	type BarberShopSimState,
 	barberShopEventHandler,
 	initialBarberShopState,
 	simStep,
@@ -78,7 +78,7 @@ function Person() {
 
 function App() {
 	const [showStats, setShowStats] = useState(false);
-	const [simState, setSimState] = useState<SimulationState>(
+	const [simState, setSimState] = useState<BarberShopSimState>(
 		initialSimState(2, 2),
 	);
 
