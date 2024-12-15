@@ -1,14 +1,14 @@
 import { PriorityQueue } from "priority-queue-typescript";
 import type {
 	BarberShopEvent,
-	BarbershopEvent,
+	BarberShopSimEvent,
 	ChairStates,
 	Customer,
 	Place,
 	SystemState,
 } from "./barbershop.types.ts";
 
-function E(kind: BarberShopEvent, time: number): BarbershopEvent {
+function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
 	return {
 		kind,
 		time,
@@ -19,8 +19,8 @@ function getFinishedEvent(
 	now: number,
 	chair: number,
 	customerName: string,
-): BarbershopEvent {
-	return <BarbershopEvent>{
+): BarberShopSimEvent {
+	return <BarberShopSimEvent>{
 		kind: {
 			kind: "CUSTOMER_FINISHED",
 			chair,
@@ -47,8 +47,8 @@ function findLongestWaitingCustomer(systemState: SystemState) {
 
 export function barberShopEventHandler(
 	systemState: SystemState,
-	event: BarbershopEvent,
-): { newSystemState: SystemState; events: BarbershopEvent[] } {
+	event: BarberShopSimEvent,
+): { newSystemState: SystemState; events: BarberShopSimEvent[] } {
 	switch (event.kind.kind) {
 		case "CUSTOMER_ARRIVED": {
 			const arrivingCustomer = event.kind.arrivingCustomer;
@@ -224,26 +224,26 @@ export function barberShopEventHandler(
 }
 
 export interface SimulationState {
-	eventQueue: PriorityQueue<BarbershopEvent>;
+	eventQueue: PriorityQueue<BarberShopSimEvent>;
 	systemState: SystemState;
 	time: number;
 }
 
 export function simulate(
-	initialEvents: BarbershopEvent[],
+	initialEvents: BarberShopSimEvent[],
 	initialSystemState: SystemState,
 	simulationTimeMinutes: number,
 	handleEvent: (
 		state: SystemState,
-		event: BarbershopEvent,
+		event: BarberShopSimEvent,
 	) => {
 		newSystemState: SystemState;
-		events: BarbershopEvent[];
+		events: BarberShopSimEvent[];
 	},
 ): SystemState {
-	const eventQueue = new PriorityQueue<BarbershopEvent>(
+	const eventQueue = new PriorityQueue<BarberShopSimEvent>(
 		10, // initial capability of queue
-		(a: BarbershopEvent, b: BarbershopEvent) => a.time - b.time,
+		(a: BarberShopSimEvent, b: BarberShopSimEvent) => a.time - b.time,
 	);
 	for (const event of initialEvents) {
 		eventQueue.add(event);
@@ -266,10 +266,10 @@ export function simStep(
 	deltaTimeMinutes: number,
 	handleEvent: (
 		state: SystemState,
-		event: BarbershopEvent,
+		event: BarberShopSimEvent,
 	) => {
 		newSystemState: SystemState;
-		events: BarbershopEvent[];
+		events: BarberShopSimEvent[];
 	},
 ): SimulationState {
 	const newTime = simulationState.time + deltaTimeMinutes;

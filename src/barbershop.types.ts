@@ -29,7 +29,9 @@ export type Place = {
 	which: number;
 };
 
-export interface BarbershopEvent {
+interface SimEvent<T> {
 	time: number;
-	kind: BarberShopEvent;
+	kind: T;
 }
+
+export type BarberShopSimEvent = SimEvent<BarberShopEvent>;

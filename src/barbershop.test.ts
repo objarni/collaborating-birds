@@ -4,7 +4,7 @@ import {
 	initialBarberShopState,
 	simulate,
 } from "./barbershop.ts";
-import type { BarbershopEvent } from "./barbershop.types.ts";
+import type { BarberShopSimEvent } from "./barbershop.types.ts";
 
 describe("Barbershop", () => {
 	/* A barber shop simulation.
@@ -22,7 +22,7 @@ describe("Barbershop", () => {
 	 a customer arrives.
 
    */
-	const initialEvent: BarbershopEvent[] = [
+	const initialEvent: BarberShopSimEvent[] = [
 		{
 			time: 0,
 			kind: {
