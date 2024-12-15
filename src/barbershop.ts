@@ -80,7 +80,10 @@ export function barberShopEventHandler(
 			// if not, customer leaves
 
 			const nextCustomerArriveEvent = E(
-				{ kind: "CUSTOMER_ARRIVED", arrivingCustomer: randomName() },
+				{
+					kind: "CUSTOMER_ARRIVED",
+					arrivingCustomer: randomName(systemState.customers),
+				},
 				event.time + 8,
 			);
 			const chair = systemState.chairs.findIndex(
@@ -314,10 +317,16 @@ export function initialBarberShopState(
 	};
 }
 
-function randomName(): string {
+function randomName(customers: Customer[]): string {
 	// Generate a random 'name' on form F.L
 	// where F and L are single random letters
-	return `${getRandomLetter()}.${getRandomLetter()}`;
+	const existingNames = customers.map((customer) => customer.name);
+	while (true) {
+		const name = `${getRandomLetter()}.${getRandomLetter()}`;
+		if (!existingNames.includes(name)) {
+			return name;
+		}
+	}
 }
 
 function getRandomLetter(): string {
