@@ -1,4 +1,4 @@
-export interface SystemState {
+export interface BarberShopState {
 	missedClients: number;
 	money: number;
 	chairs: ChairStates[];

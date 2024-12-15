@@ -7,11 +7,14 @@ import {
 	initialBarberShopState,
 	simStep,
 } from "./barbershop.ts";
-import type { BarberShopSimEvent, SystemState } from "./barbershop.types.ts";
+import type {
+	BarberShopSimEvent,
+	BarberShopState,
+} from "./barbershop.types.ts";
 
 interface BarberShopProps {
 	minutes: number;
-	state: SystemState;
+	state: BarberShopState;
 }
 
 function Statistics({ state, minutes }: BarberShopProps) {

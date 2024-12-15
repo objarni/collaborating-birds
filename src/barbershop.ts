@@ -2,10 +2,10 @@ import { PriorityQueue } from "priority-queue-typescript";
 import type {
 	BarberShopEvent,
 	BarberShopSimEvent,
+	BarberShopState,
 	ChairStates,
 	Customer,
 	Place,
-	SystemState,
 } from "./barbershop.types.ts";
 
 function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
@@ -30,7 +30,7 @@ function getFinishedEvent(
 	};
 }
 
-function findLongestWaitingCustomer(systemState: SystemState) {
+function findLongestWaitingCustomer(systemState: BarberShopState) {
 	let longestWaitingCustomer = -1;
 	let earliestSitDownTime = Number.POSITIVE_INFINITY;
 	for (let i = systemState.seats.length - 1; i >= 0; i--) {
@@ -46,9 +46,9 @@ function findLongestWaitingCustomer(systemState: SystemState) {
 }
 
 export function barberShopEventHandler(
-	systemState: SystemState,
+	systemState: BarberShopState,
 	event: BarberShopSimEvent,
-): { newSystemState: SystemState; events: BarberShopSimEvent[] } {
+): { newSystemState: BarberShopState; events: BarberShopSimEvent[] } {
 	switch (event.kind.kind) {
 		case "CUSTOMER_ARRIVED": {
 			const arrivingCustomer = event.kind.arrivingCustomer;
@@ -225,22 +225,22 @@ export function barberShopEventHandler(
 
 export interface SimulationState {
 	eventQueue: PriorityQueue<BarberShopSimEvent>;
-	systemState: SystemState;
+	systemState: BarberShopState;
 	time: number;
 }
 
 export function simulate(
 	initialEvents: BarberShopSimEvent[],
-	initialSystemState: SystemState,
+	initialSystemState: BarberShopState,
 	simulationTimeMinutes: number,
 	handleEvent: (
-		state: SystemState,
+		state: BarberShopState,
 		event: BarberShopSimEvent,
 	) => {
-		newSystemState: SystemState;
+		newSystemState: BarberShopState;
 		events: BarberShopSimEvent[];
 	},
-): SystemState {
+): BarberShopState {
 	const eventQueue = new PriorityQueue<BarberShopSimEvent>(
 		10, // initial capability of queue
 		(a: BarberShopSimEvent, b: BarberShopSimEvent) => a.time - b.time,
@@ -265,10 +265,10 @@ export function simStep(
 	simulationState: SimulationState,
 	deltaTimeMinutes: number,
 	handleEvent: (
-		state: SystemState,
+		state: BarberShopState,
 		event: BarberShopSimEvent,
 	) => {
-		newSystemState: SystemState;
+		newSystemState: BarberShopState;
 		events: BarberShopSimEvent[];
 	},
 ): SimulationState {
@@ -299,7 +299,7 @@ export function simStep(
 export function initialBarberShopState(
 	chairs: number,
 	seats: number,
-): SystemState {
+): BarberShopState {
 	// const chairStates: ChairStates[] = Array(chairs).fill("EMPTY");
 	const chairStates: ChairStates[] = Array(chairs)
 		.fill(null)
