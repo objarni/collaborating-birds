@@ -2,13 +2,12 @@ import "./App.css";
 import { PriorityQueue } from "priority-queue-typescript";
 import { useEffect, useState } from "react";
 import {
-	type SimEvent,
 	type SimulationState,
-	type SystemState,
 	barberShopEventHandler,
 	initialBarberShopState,
 	simStep,
 } from "./barbershop.ts";
+import type { SimEvent, SystemState } from "./barbershop.types.ts";
 
 interface BarberShopProps {
 	minutes: number;

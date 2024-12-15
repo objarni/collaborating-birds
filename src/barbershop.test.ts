@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
-	type SimEvent,
 	barberShopEventHandler,
 	initialBarberShopState,
 	simulate,
 } from "./barbershop.ts";
+import type { SimEvent } from "./barbershop.types.ts";
 
 describe("Barbershop", () => {
 	/* A barber shop simulation.

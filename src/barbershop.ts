@@ -1,40 +1,12 @@
 import { PriorityQueue } from "priority-queue-typescript";
-
-export interface SystemState {
-	missedClients: number;
-	money: number;
-	chairs: ChairStates[];
-	seats: SeatStates[];
-	customers: Customer[];
-}
-
-type ChairStates =
-	| { state: "EMPTY" }
-	| { state: "CUTTING_HAIR"; customerName: string };
-
-type SeatStates =
-	| { state: "EMPTY" }
-	| { state: "WAITING_TO_CUT_HAIR"; customerName: string; sitDownTime: number };
-
-type BarberShopEvent =
-	| { kind: "CUSTOMER_ARRIVED"; arrivingCustomer: string }
-	| { kind: "CUSTOMER_DECIDED"; decidedCustomer: string }
-	| { kind: "CUSTOMER_FINISHED"; finishedCustomer: string; chair: number };
-
-type Customer = {
-	name: string;
-	place: Place;
-};
-
-type Place = {
-	kind: "Chair" | "Seat" | "AtWindow";
-	which: number;
-};
-
-export interface SimEvent {
-	time: number;
-	kind: BarberShopEvent;
-}
+import type {
+	BarberShopEvent,
+	ChairStates,
+	Customer,
+	Place,
+	SimEvent,
+	SystemState,
+} from "./barbershop.types.ts";
 
 function E(kind: BarberShopEvent, time: number): SimEvent {
 	return {
