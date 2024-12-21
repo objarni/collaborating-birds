@@ -268,10 +268,7 @@ export function simulate(
 	handleEvent: (
 		state: BarberShopState,
 		event: BarberShopSimEvent,
-	) => {
-		newSystemState: BarberShopState;
-		events: BarberShopSimEvent[];
-	},
+	) => HandlerResult,
 ): BarberShopState {
 	const eventQueue = new PriorityQueue<BarberShopSimEvent>(
 		10, // initial capability of queue
