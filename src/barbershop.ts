@@ -80,12 +80,21 @@ function handleCustomerArrived(
 	};
 }
 
-export function barberShopEventHandler(
+function handleBarberShopEvent(
+	barberShopEvent:
+		| { kind: "CUSTOMER_ARRIVED"; arrivingCustomer: string }
+		| {
+				kind: "CUSTOMER_DECIDED";
+				decidedCustomer: string;
+		  }
+		| {
+				kind: "CUSTOMER_FINISHED";
+				finishedCustomer: string;
+				chair: number;
+		  },
+	eventTime: number,
 	systemState: BarberShopState,
-	event: BarberShopSimEvent,
-): { newSystemState: BarberShopState; events: BarberShopSimEvent[] } {
-	const barberShopEvent = event.kind;
-	const eventTime = event.time;
+) {
 	switch (barberShopEvent.kind) {
 		case "CUSTOMER_ARRIVED": {
 			return handleCustomerArrived(barberShopEvent, eventTime, systemState);
@@ -240,6 +249,15 @@ export function barberShopEventHandler(
 			};
 		}
 	}
+}
+
+export function barberShopEventHandler(
+	systemState: BarberShopState,
+	event: BarberShopSimEvent,
+): { newSystemState: BarberShopState; events: BarberShopSimEvent[] } {
+	const barberShopEvent = event.kind;
+	const eventTime = event.time;
+	return handleBarberShopEvent(barberShopEvent, eventTime, systemState);
 }
 
 export type BarberShopSimState = SimulationState<
