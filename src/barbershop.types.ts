@@ -37,3 +37,11 @@ export type BarberShopSimState = SimulationState<
 	BarberShopSimEvent,
 	BarberShopState
 >;
+export type HandlerResult = {
+	newSystemState: BarberShopState;
+	events: SimEvent<BarberShopEvent>[];
+};
+export type EventHandler = (
+	state: BarberShopState,
+	event: BarberShopSimEvent,
+) => HandlerResult;

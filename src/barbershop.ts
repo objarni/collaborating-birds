@@ -6,8 +6,9 @@ import type {
 	BarberShopState,
 	ChairStates,
 	Customer,
+	EventHandler,
+	HandlerResult,
 } from "./barbershop.types.ts";
-import type { SimEvent } from "./discrete-event-simulation-typescript/simevent.ts";
 
 function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
 	return {
@@ -49,11 +50,6 @@ function findLongestWaitingCustomer(systemState: BarberShopState) {
 function randomRange(a: number, b: number) {
 	return Math.random() * (b - a) + a;
 }
-
-type HandlerResult = {
-	newSystemState: BarberShopState;
-	events: SimEvent<BarberShopEvent>[];
-};
 
 function handleCustomerArrived(
 	barberShopEvent: {
@@ -257,11 +253,6 @@ function handleBarberShopEvent(
 		}
 	}
 }
-
-type EventHandler = (
-	state: BarberShopState,
-	event: BarberShopSimEvent,
-) => HandlerResult;
 
 export function simulate(
 	initialEvents: BarberShopSimEvent[],
