@@ -50,34 +50,45 @@ function randomRange(a: number, b: number) {
 	return Math.random() * (b - a) + a;
 }
 
+function handleCustomerArrived(
+	barberShopEvent: {
+		kind: "CUSTOMER_ARRIVED";
+		arrivingCustomer: string;
+	},
+	eventTime: number,
+	systemState: BarberShopState,
+) {
+	const arrivingCustomer = barberShopEvent.arrivingCustomer;
+	console.log(`Customer ${arrivingCustomer} arrived, staring through window.`);
+	const customerDecisionEvent = E(
+		{
+			kind: "CUSTOMER_DECIDED",
+			decidedCustomer: arrivingCustomer,
+		},
+		eventTime + 1,
+	);
+	systemState.customers.push({
+		name: arrivingCustomer,
+		place: {
+			kind: "AtWindow",
+			which: 0,
+		},
+	});
+	return {
+		newSystemState: systemState,
+		events: [customerDecisionEvent],
+	};
+}
+
 export function barberShopEventHandler(
 	systemState: BarberShopState,
 	event: BarberShopSimEvent,
 ): { newSystemState: BarberShopState; events: BarberShopSimEvent[] } {
-	switch (event.kind.kind) {
+	const barberShopEvent = event.kind;
+	const eventTime = event.time;
+	switch (barberShopEvent.kind) {
 		case "CUSTOMER_ARRIVED": {
-			const arrivingCustomer = event.kind.arrivingCustomer;
-			console.log(
-				`Customer ${arrivingCustomer} arrived, staring through window.`,
-			);
-			const customerDecisionEvent = E(
-				{
-					kind: "CUSTOMER_DECIDED",
-					decidedCustomer: arrivingCustomer,
-				},
-				event.time + 1,
-			);
-			systemState.customers.push({
-				name: arrivingCustomer,
-				place: {
-					kind: "AtWindow",
-					which: 0,
-				},
-			});
-			return {
-				newSystemState: systemState,
-				events: [customerDecisionEvent],
-			};
+			return handleCustomerArrived(barberShopEvent, eventTime, systemState);
 		}
 		case "CUSTOMER_DECIDED": {
 			// check is a chair (primarily) or sofa seat (secondarily) is empty
@@ -88,15 +99,15 @@ export function barberShopEventHandler(
 					kind: "CUSTOMER_ARRIVED",
 					arrivingCustomer: randomName(systemState.customers),
 				},
-				event.time + randomRange(2, 20),
+				eventTime + randomRange(2, 20),
 			);
 			const chair = systemState.chairs.findIndex(
 				(chair) => chair.state === "EMPTY",
 			);
-			const decidedCustomer = event.kind.decidedCustomer;
+			const decidedCustomer = barberShopEvent.decidedCustomer;
 			if (chair >= 0) {
 				console.log(
-					event.time,
+					eventTime,
 					`Customer ${decidedCustomer} is getting a hair cut at chair ${chair}.`,
 				);
 				systemState.chairs[chair] = {
@@ -116,7 +127,7 @@ export function barberShopEventHandler(
 				);
 
 				const finishedEvent = getFinishedEvent(
-					event.time,
+					eventTime,
 					chair,
 					decidedCustomer,
 				);
@@ -131,13 +142,13 @@ export function barberShopEventHandler(
 			);
 			if (seat >= 0) {
 				console.log(
-					event.time,
+					eventTime,
 					`Customer ${decidedCustomer} takes seat ${seat} to wait for a hair cut.`,
 				);
 				systemState.seats[seat] = {
 					state: "WAITING_TO_CUT_HAIR",
 					customerName: decidedCustomer,
-					sitDownTime: event.time,
+					sitDownTime: eventTime,
 				};
 
 				const newPlace: Place = {
@@ -159,7 +170,7 @@ export function barberShopEventHandler(
 			}
 
 			console.log(
-				event.time,
+				eventTime,
 				`${decidedCustomer} arrived, and left - barber shop is busy.`,
 			);
 			systemState.customers = systemState.customers.filter(
@@ -175,14 +186,14 @@ export function barberShopEventHandler(
 		}
 
 		case "CUSTOMER_FINISHED": {
-			const chair = event.kind.chair;
-			const finishedCustomer = event.kind.finishedCustomer;
+			const chair = barberShopEvent.chair;
+			const finishedCustomer = barberShopEvent.finishedCustomer;
 			systemState.customers = systemState.customers.filter(
 				(customer) => customer.name !== finishedCustomer,
 			);
 			systemState.money += 200;
 			console.log(
-				event.time,
+				eventTime,
 				`${finishedCustomer}'s hair cut finished at chair ${chair}, shop now has ${systemState.money} SEK.`,
 			);
 			systemState.chairs[chair] = { state: "EMPTY" };
@@ -204,13 +215,13 @@ export function barberShopEventHandler(
 						}
 					}
 					const finishedEvent = getFinishedEvent(
-						event.time,
+						eventTime,
 						chair,
 						seatedCustomer,
 					);
 					systemState.seats[seatWithWaitingCustomer] = { state: "EMPTY" };
 					console.log(
-						event.time,
+						eventTime,
 						`The waiting customer ${seatedCustomer} at seat ${seatWithWaitingCustomer} sat down at chair ${chair}.`,
 					);
 					systemState.chairs[chair] = {
