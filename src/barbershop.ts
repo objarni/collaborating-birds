@@ -87,12 +87,9 @@ function handleCustomerArrived(
 }
 
 function handleCustomerDecided(
-	systemState: BarberShopState,
+	barberShopEvent: { kind: "CUSTOMER_DECIDED"; decidedCustomer: string },
 	eventTime: number,
-	barberShopEvent: {
-		kind: "CUSTOMER_DECIDED";
-		decidedCustomer: string;
-	},
+	systemState: BarberShopState,
 ): HandlerResult {
 	const nextCustomerArriveEvent = E(
 		{
@@ -185,8 +182,8 @@ function handleCustomerFinished(
 		finishedCustomer: string;
 		chair: number;
 	},
-	systemState: BarberShopState,
 	eventTime: number,
+	systemState: BarberShopState,
 ): HandlerResult {
 	const chair = barberShopEvent.chair;
 	const finishedCustomer = barberShopEvent.finishedCustomer;
@@ -247,10 +244,10 @@ function handleBarberShopEvent(
 			return handleCustomerArrived(barberShopEvent, eventTime, systemState);
 		}
 		case "CUSTOMER_DECIDED": {
-			return handleCustomerDecided(systemState, eventTime, barberShopEvent);
+			return handleCustomerDecided(barberShopEvent, eventTime, systemState);
 		}
 		case "CUSTOMER_FINISHED": {
-			return handleCustomerFinished(barberShopEvent, systemState, eventTime);
+			return handleCustomerFinished(barberShopEvent, eventTime, systemState);
 		}
 	}
 }
