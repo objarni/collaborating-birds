@@ -234,6 +234,15 @@ function handleCustomerFinished(
 	};
 }
 
+export function barberShopEventHandler(
+	systemState: BarberShopState,
+	event: BarberShopSimEvent,
+): HandlerResult {
+	const barberShopEvent = event.kind;
+	const eventTime = event.time;
+	return handleBarberShopEvent(barberShopEvent, eventTime, systemState);
+}
+
 function handleBarberShopEvent(
 	barberShopEvent: BarberShopEvent,
 	eventTime: number,
@@ -250,15 +259,6 @@ function handleBarberShopEvent(
 			return handleCustomerFinished(barberShopEvent, eventTime, systemState);
 		}
 	}
-}
-
-export function barberShopEventHandler(
-	systemState: BarberShopState,
-	event: BarberShopSimEvent,
-): HandlerResult {
-	const barberShopEvent = event.kind;
-	const eventTime = event.time;
-	return handleBarberShopEvent(barberShopEvent, eventTime, systemState);
 }
 
 export type BarberShopSimState = SimulationState<
