@@ -9,13 +9,6 @@ import type {
 } from "./barbershop.types.ts";
 import type { SimEvent } from "./discrete-event-simulation-typescript/simevent.ts";
 
-function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
-	return {
-		kind,
-		time,
-	};
-}
-
 function getFinishedEvent(
 	now: number,
 	chair: number,
@@ -65,13 +58,13 @@ function handleCustomerArrived(
 ): HandlerResult {
 	const arrivingCustomer = barberShopEvent.arrivingCustomer;
 	console.log(`Customer ${arrivingCustomer} arrived, staring through window.`);
-	const customerDecisionEvent = E(
-		{
+	const customerDecisionEvent = {
+		kind: {
 			kind: "CUSTOMER_DECIDED",
 			decidedCustomer: arrivingCustomer,
 		},
-		eventTime + 1,
-	);
+		time: eventTime + 1,
+	};
 	systemState.customers.push({
 		name: arrivingCustomer,
 		place: {
@@ -90,13 +83,13 @@ function handleCustomerDecided(
 	eventTime: number,
 	systemState: BarberShopState,
 ): HandlerResult {
-	const nextCustomerArriveEvent = E(
-		{
+	const nextCustomerArriveEvent = {
+		kind: {
 			kind: "CUSTOMER_ARRIVED",
 			arrivingCustomer: randomName(systemState.customers),
 		},
-		eventTime + randomRange(2, 20),
-	);
+		time: eventTime + randomRange(2, 20),
+	};
 	const chair = systemState.chairs.findIndex(
 		(chair) => chair.state === "EMPTY",
 	);
