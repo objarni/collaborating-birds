@@ -51,6 +51,11 @@ function randomRange(a: number, b: number) {
 	return Math.random() * (b - a) + a;
 }
 
+type HandlerResult = {
+	newSystemState: BarberShopState;
+	events: SimEvent<BarberShopEvent>[];
+};
+
 function handleCustomerArrived(
 	barberShopEvent: {
 		kind: "CUSTOMER_ARRIVED";
@@ -58,7 +63,7 @@ function handleCustomerArrived(
 	},
 	eventTime: number,
 	systemState: BarberShopState,
-) {
+): HandlerResult {
 	const arrivingCustomer = barberShopEvent.arrivingCustomer;
 	console.log(`Customer ${arrivingCustomer} arrived, staring through window.`);
 	const customerDecisionEvent = E(
@@ -88,7 +93,7 @@ function handleCustomerDecided(
 		kind: "CUSTOMER_DECIDED";
 		decidedCustomer: string;
 	},
-) {
+): HandlerResult {
 	const nextCustomerArriveEvent = E(
 		{
 			kind: "CUSTOMER_ARRIVED",
@@ -182,7 +187,7 @@ function handleCustomerFinished(
 	},
 	systemState: BarberShopState,
 	eventTime: number,
-): { newSystemState: BarberShopState; events: SimEvent<BarberShopEvent>[] } {
+): HandlerResult {
 	const chair = barberShopEvent.chair;
 	const finishedCustomer = barberShopEvent.finishedCustomer;
 	systemState.customers = systemState.customers.filter(
