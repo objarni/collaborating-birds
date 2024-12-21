@@ -81,17 +81,7 @@ function handleCustomerArrived(
 }
 
 function handleBarberShopEvent(
-	barberShopEvent:
-		| { kind: "CUSTOMER_ARRIVED"; arrivingCustomer: string }
-		| {
-				kind: "CUSTOMER_DECIDED";
-				decidedCustomer: string;
-		  }
-		| {
-				kind: "CUSTOMER_FINISHED";
-				finishedCustomer: string;
-				chair: number;
-		  },
+	barberShopEvent: BarberShopEvent,
 	eventTime: number,
 	systemState: BarberShopState,
 ) {
@@ -100,9 +90,6 @@ function handleBarberShopEvent(
 			return handleCustomerArrived(barberShopEvent, eventTime, systemState);
 		}
 		case "CUSTOMER_DECIDED": {
-			// check is a chair (primarily) or sofa seat (secondarily) is empty
-			// if not, customer leaves
-
 			const nextCustomerArriveEvent = E(
 				{
 					kind: "CUSTOMER_ARRIVED",
