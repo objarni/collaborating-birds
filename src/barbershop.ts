@@ -6,7 +6,6 @@ import type {
 	BarberShopState,
 	ChairStates,
 	Customer,
-	Place,
 } from "./barbershop.types.ts";
 import type { SimEvent } from "./discrete-event-simulation-typescript/simevent.ts";
 
