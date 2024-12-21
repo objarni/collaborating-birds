@@ -7,6 +7,7 @@ import type {
 	Customer,
 	Place,
 } from "./barbershop.types.ts";
+import type { SimEvent } from "./discrete-event-simulation-typescript/simevent.ts";
 import type { SimulationState } from "./discrete-event-simulation-typescript/simulationstate.ts";
 
 function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
@@ -181,7 +182,7 @@ function handleCustomerFinished(
 	},
 	systemState: BarberShopState,
 	eventTime: number,
-) {
+): { newSystemState: BarberShopState; events: SimEvent<BarberShopEvent>[] } {
 	const chair = barberShopEvent.chair;
 	const finishedCustomer = barberShopEvent.finishedCustomer;
 	systemState.customers = systemState.customers.filter(
@@ -243,7 +244,6 @@ function handleBarberShopEvent(
 		case "CUSTOMER_DECIDED": {
 			return handleCustomerDecided(systemState, eventTime, barberShopEvent);
 		}
-
 		case "CUSTOMER_FINISHED": {
 			return handleCustomerFinished(barberShopEvent, systemState, eventTime);
 		}
