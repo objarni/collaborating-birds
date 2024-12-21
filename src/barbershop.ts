@@ -261,14 +261,16 @@ function handleBarberShopEvent(
 	}
 }
 
+type EventHandler = (
+	state: BarberShopState,
+	event: BarberShopSimEvent,
+) => HandlerResult;
+
 export function simulate(
 	initialEvents: BarberShopSimEvent[],
 	initialSystemState: BarberShopState,
 	simulationTimeMinutes: number,
-	handleEvent: (
-		state: BarberShopState,
-		event: BarberShopSimEvent,
-	) => HandlerResult,
+	handleEvent: EventHandler,
 ): BarberShopState {
 	const eventQueue = new PriorityQueue<BarberShopSimEvent>(
 		10, // initial capability of queue
@@ -293,10 +295,7 @@ export function simulate(
 export function simStep(
 	simulationState: BarberShopSimState,
 	deltaTimeMinutes: number,
-	handleEvent: (
-		state: BarberShopState,
-		event: BarberShopSimEvent,
-	) => HandlerResult,
+	handleEvent: EventHandler,
 ): BarberShopSimState {
 	const newTime = simulationState.time + deltaTimeMinutes;
 	while (true) {
