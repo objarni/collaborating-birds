@@ -10,45 +10,31 @@ import type {
 	HandlerResult,
 } from "./barbershop.types.ts";
 
-function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
-	return {
-		kind,
-		time,
-	};
+export function barberShopEventHandler(
+	systemState: BarberShopState,
+	event: BarberShopSimEvent,
+): HandlerResult {
+	const barberShopEvent = event.kind;
+	const eventTime = event.time;
+	return handleBarberShopEvent(barberShopEvent, eventTime, systemState);
 }
 
-function getFinishedEvent(
-	now: number,
-	chair: number,
-	customerName: string,
-): BarberShopSimEvent {
-	return <BarberShopSimEvent>{
-		kind: {
-			kind: "CUSTOMER_FINISHED",
-			chair,
-			finishedCustomer: customerName,
-		},
-		time: now + randomRange(15, 60),
-	};
-}
-
-function findLongestWaitingCustomer(systemState: BarberShopState) {
-	let longestWaitingCustomer = -1;
-	let earliestSitDownTime = Number.POSITIVE_INFINITY;
-	for (let i = systemState.seats.length - 1; i >= 0; i--) {
-		const seat = systemState.seats[i];
-		if (seat.state === "WAITING_TO_CUT_HAIR") {
-			if (seat.sitDownTime < earliestSitDownTime) {
-				longestWaitingCustomer = i;
-				earliestSitDownTime = seat.sitDownTime;
-			}
+function handleBarberShopEvent(
+	barberShopEvent: BarberShopEvent,
+	eventTime: number,
+	systemState: BarberShopState,
+): HandlerResult {
+	switch (barberShopEvent.kind) {
+		case "CUSTOMER_ARRIVED": {
+			return handleCustomerArrived(barberShopEvent, eventTime, systemState);
+		}
+		case "CUSTOMER_DECIDED": {
+			return handleCustomerDecided(barberShopEvent, eventTime, systemState);
+		}
+		case "CUSTOMER_FINISHED": {
+			return handleCustomerFinished(barberShopEvent, eventTime, systemState);
 		}
 	}
-	return longestWaitingCustomer;
-}
-
-function randomRange(a: number, b: number) {
-	return Math.random() * (b - a) + a;
 }
 
 function handleCustomerArrived(
@@ -227,31 +213,45 @@ function handleCustomerFinished(
 	};
 }
 
-export function barberShopEventHandler(
-	systemState: BarberShopState,
-	event: BarberShopSimEvent,
-): HandlerResult {
-	const barberShopEvent = event.kind;
-	const eventTime = event.time;
-	return handleBarberShopEvent(barberShopEvent, eventTime, systemState);
+function getFinishedEvent(
+	now: number,
+	chair: number,
+	customerName: string,
+): BarberShopSimEvent {
+	return <BarberShopSimEvent>{
+		kind: {
+			kind: "CUSTOMER_FINISHED",
+			chair,
+			finishedCustomer: customerName,
+		},
+		time: now + randomRange(15, 60),
+	};
 }
 
-function handleBarberShopEvent(
-	barberShopEvent: BarberShopEvent,
-	eventTime: number,
-	systemState: BarberShopState,
-): HandlerResult {
-	switch (barberShopEvent.kind) {
-		case "CUSTOMER_ARRIVED": {
-			return handleCustomerArrived(barberShopEvent, eventTime, systemState);
-		}
-		case "CUSTOMER_DECIDED": {
-			return handleCustomerDecided(barberShopEvent, eventTime, systemState);
-		}
-		case "CUSTOMER_FINISHED": {
-			return handleCustomerFinished(barberShopEvent, eventTime, systemState);
+function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
+	return {
+		kind,
+		time,
+	};
+}
+
+function findLongestWaitingCustomer(systemState: BarberShopState) {
+	let longestWaitingCustomer = -1;
+	let earliestSitDownTime = Number.POSITIVE_INFINITY;
+	for (let i = systemState.seats.length - 1; i >= 0; i--) {
+		const seat = systemState.seats[i];
+		if (seat.state === "WAITING_TO_CUT_HAIR") {
+			if (seat.sitDownTime < earliestSitDownTime) {
+				longestWaitingCustomer = i;
+				earliestSitDownTime = seat.sitDownTime;
+			}
 		}
 	}
+	return longestWaitingCustomer;
+}
+
+function randomRange(a: number, b: number) {
+	return Math.random() * (b - a) + a;
 }
 
 export function simulate(
