@@ -111,13 +111,12 @@ function handleCustomerDecided(
 			state: "CUTTING_HAIR",
 			customerName: decidedCustomer,
 		};
-		const newPlace: Place = {
-			kind: "Chair",
-			which: chair,
-		};
 		const newCustomer: Customer = {
 			name: decidedCustomer,
-			place: newPlace,
+			place: {
+				kind: "Chair",
+				which: chair,
+			},
 		};
 		systemState.customers = systemState.customers.map((customer) =>
 			customer.name === decidedCustomer ? newCustomer : customer,
@@ -142,13 +141,12 @@ function handleCustomerDecided(
 			sitDownTime: eventTime,
 		};
 
-		const newPlace: Place = {
-			kind: "Seat",
-			which: seat,
-		};
 		const newCustomer: Customer = {
 			name: decidedCustomer,
-			place: newPlace,
+			place: {
+				kind: "Seat",
+				which: seat,
+			},
 		};
 		systemState.customers = systemState.customers.map((customer) =>
 			customer.name === decidedCustomer ? newCustomer : customer,
