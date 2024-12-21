@@ -1,4 +1,5 @@
 import type { SimEvent } from "./discrete-event-simulation-typescript/simevent.ts";
+import type { SimulationState } from "./discrete-event-simulation-typescript/simulationstate.ts";
 
 export interface BarberShopState {
 	missedClients: number;
@@ -32,3 +33,7 @@ export type Place = {
 };
 
 export type BarberShopSimEvent = SimEvent<BarberShopEvent>;
+export type BarberShopSimState = SimulationState<
+	BarberShopSimEvent,
+	BarberShopState
+>;

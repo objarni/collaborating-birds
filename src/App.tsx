@@ -2,13 +2,13 @@ import "./App.css";
 import { PriorityQueue } from "priority-queue-typescript";
 import { useEffect, useState } from "react";
 import {
-	type BarberShopSimState,
 	barberShopEventHandler,
 	initialBarberShopState,
 	simStep,
 } from "./barbershop.ts";
 import type {
 	BarberShopSimEvent,
+	BarberShopSimState,
 	BarberShopState,
 } from "./barbershop.types.ts";
 

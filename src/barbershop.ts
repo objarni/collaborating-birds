@@ -2,13 +2,13 @@ import { PriorityQueue } from "priority-queue-typescript";
 import type {
 	BarberShopEvent,
 	BarberShopSimEvent,
+	BarberShopSimState,
 	BarberShopState,
 	ChairStates,
 	Customer,
 	Place,
 } from "./barbershop.types.ts";
 import type { SimEvent } from "./discrete-event-simulation-typescript/simevent.ts";
-import type { SimulationState } from "./discrete-event-simulation-typescript/simulationstate.ts";
 
 function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
 	return {
@@ -261,11 +261,6 @@ function handleBarberShopEvent(
 	}
 }
 
-export type BarberShopSimState = SimulationState<
-	BarberShopSimEvent,
-	BarberShopState
->;
-
 export function simulate(
 	initialEvents: BarberShopSimEvent[],
 	initialSystemState: BarberShopState,
@@ -304,10 +299,7 @@ export function simStep(
 	handleEvent: (
 		state: BarberShopState,
 		event: BarberShopSimEvent,
-	) => {
-		newSystemState: BarberShopState;
-		events: BarberShopSimEvent[];
-	},
+	) => HandlerResult,
 ): BarberShopSimState {
 	const newTime = simulationState.time + deltaTimeMinutes;
 	while (true) {
