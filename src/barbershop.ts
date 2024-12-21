@@ -173,6 +173,64 @@ function handleCustomerDecided(
 	};
 }
 
+function handleCustomerFinished(
+	barberShopEvent: {
+		kind: "CUSTOMER_FINISHED";
+		finishedCustomer: string;
+		chair: number;
+	},
+	systemState: BarberShopState,
+	eventTime: number,
+) {
+	const chair = barberShopEvent.chair;
+	const finishedCustomer = barberShopEvent.finishedCustomer;
+	systemState.customers = systemState.customers.filter(
+		(customer) => customer.name !== finishedCustomer,
+	);
+	systemState.money += 200;
+	console.log(
+		eventTime,
+		`${finishedCustomer}'s hair cut finished at chair ${chair}, shop now has ${systemState.money} SEK.`,
+	);
+	systemState.chairs[chair] = { state: "EMPTY" };
+	const seatWithWaitingCustomer = findLongestWaitingCustomer(systemState);
+
+	if (seatWithWaitingCustomer >= 0) {
+		if (
+			systemState.seats[seatWithWaitingCustomer].state === "WAITING_TO_CUT_HAIR"
+		) {
+			const seatedCustomer =
+				systemState.seats[seatWithWaitingCustomer].customerName;
+			for (let i = 0; i < systemState.customers.length; i++) {
+				if (systemState.customers[i].name === seatedCustomer) {
+					systemState.customers[i].place = {
+						kind: "Chair",
+						which: chair,
+					};
+				}
+			}
+			const finishedEvent = getFinishedEvent(eventTime, chair, seatedCustomer);
+			systemState.seats[seatWithWaitingCustomer] = { state: "EMPTY" };
+			console.log(
+				eventTime,
+				`The waiting customer ${seatedCustomer} at seat ${seatWithWaitingCustomer} sat down at chair ${chair}.`,
+			);
+			systemState.chairs[chair] = {
+				state: "CUTTING_HAIR",
+				customerName: seatedCustomer,
+			};
+			return {
+				newSystemState: systemState,
+				events: [finishedEvent],
+			};
+		}
+	}
+	return {
+		newSystemState: systemState,
+		events: [],
+	};
+}
+
 function handleBarberShopEvent(
 	barberShopEvent: BarberShopEvent,
 	eventTime: number,
@@ -187,58 +245,7 @@ function handleBarberShopEvent(
 		}
 
 		case "CUSTOMER_FINISHED": {
-			const chair = barberShopEvent.chair;
-			const finishedCustomer = barberShopEvent.finishedCustomer;
-			systemState.customers = systemState.customers.filter(
-				(customer) => customer.name !== finishedCustomer,
-			);
-			systemState.money += 200;
-			console.log(
-				eventTime,
-				`${finishedCustomer}'s hair cut finished at chair ${chair}, shop now has ${systemState.money} SEK.`,
-			);
-			systemState.chairs[chair] = { state: "EMPTY" };
-			const seatWithWaitingCustomer = findLongestWaitingCustomer(systemState);
-
-			if (seatWithWaitingCustomer >= 0) {
-				if (
-					systemState.seats[seatWithWaitingCustomer].state ===
-					"WAITING_TO_CUT_HAIR"
-				) {
-					const seatedCustomer =
-						systemState.seats[seatWithWaitingCustomer].customerName;
-					for (let i = 0; i < systemState.customers.length; i++) {
-						if (systemState.customers[i].name === seatedCustomer) {
-							systemState.customers[i].place = {
-								kind: "Chair",
-								which: chair,
-							};
-						}
-					}
-					const finishedEvent = getFinishedEvent(
-						eventTime,
-						chair,
-						seatedCustomer,
-					);
-					systemState.seats[seatWithWaitingCustomer] = { state: "EMPTY" };
-					console.log(
-						eventTime,
-						`The waiting customer ${seatedCustomer} at seat ${seatWithWaitingCustomer} sat down at chair ${chair}.`,
-					);
-					systemState.chairs[chair] = {
-						state: "CUTTING_HAIR",
-						customerName: seatedCustomer,
-					};
-					return {
-						newSystemState: systemState,
-						events: [finishedEvent],
-					};
-				}
-			}
-			return {
-				newSystemState: systemState,
-				events: [],
-			};
+			return handleCustomerFinished(barberShopEvent, systemState, eventTime);
 		}
 	}
 }
