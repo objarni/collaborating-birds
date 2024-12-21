@@ -241,7 +241,7 @@ function handleBarberShopEvent(
 	barberShopEvent: BarberShopEvent,
 	eventTime: number,
 	systemState: BarberShopState,
-) {
+): HandlerResult {
 	switch (barberShopEvent.kind) {
 		case "CUSTOMER_ARRIVED": {
 			return handleCustomerArrived(barberShopEvent, eventTime, systemState);
@@ -258,7 +258,7 @@ function handleBarberShopEvent(
 export function barberShopEventHandler(
 	systemState: BarberShopState,
 	event: BarberShopSimEvent,
-): { newSystemState: BarberShopState; events: BarberShopSimEvent[] } {
+): HandlerResult {
 	const barberShopEvent = event.kind;
 	const eventTime = event.time;
 	return handleBarberShopEvent(barberShopEvent, eventTime, systemState);
