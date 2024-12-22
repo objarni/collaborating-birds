@@ -3,8 +3,8 @@ import { PriorityQueue } from "priority-queue-typescript";
 import { useEffect, useState } from "react";
 import {
 	barberShopEventHandler,
+	barberShopSimStep,
 	initialBarberShopState,
-	simStep,
 } from "./barbershop.ts";
 import type {
 	BarberShopSimEvent,
@@ -85,7 +85,11 @@ function App() {
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			if (showStats) return;
-			const newSimState = simStep(simState, 1, barberShopEventHandler);
+			const newSimState = barberShopSimStep(
+				simState,
+				1,
+				barberShopEventHandler,
+			);
 			setSimState(newSimState);
 		}, 300); // 1000 milliseconds = 1 second
 

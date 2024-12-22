@@ -272,7 +272,7 @@ export function simulate(
 		systemState: initialSystemState,
 		eventQueue: eventQueue,
 	};
-	simulationState = simStep(
+	simulationState = barberShopSimStep(
 		simulationState,
 		simulationTimeMinutes,
 		handleEvent,
@@ -280,7 +280,7 @@ export function simulate(
 	return simulationState.systemState;
 }
 
-export function simStep(
+export function barberShopSimStep(
 	simulationState: BarberShopSimState,
 	deltaTimeMinutes: number,
 	handleEvent: EventHandler,
