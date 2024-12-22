@@ -1,3 +1,4 @@
+import type { HandlerResult } from "./discrete-event-simulation-typescript/handlerresult.ts";
 import type { SimEvent } from "./discrete-event-simulation-typescript/simevent.ts";
 import type { SimulationState } from "./discrete-event-simulation-typescript/simulationstate.ts";
 
@@ -38,11 +39,6 @@ export type BarberShopSimState = SimulationState<
 	BarberShopSimEvent,
 	BarberShopState
 >;
-
-type HandlerResult<StateType, EventType> = {
-	newSystemState: StateType;
-	events: SimEvent<EventType>[];
-};
 
 export type BarberShopHandlerResult = HandlerResult<
 	BarberShopState,
