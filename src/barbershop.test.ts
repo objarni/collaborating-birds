@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
 	barberShopEventHandler,
 	initialBarberShopState,
-	simulate,
+	simulateBarberShop,
 } from "./barbershop.ts";
 import type { BarberShopSimEvent } from "./barbershop.types.ts";
 
@@ -34,7 +34,7 @@ describe("Barbershop", () => {
 
 	it("1 chair 1 seat 8 hours", () => {
 		const initialState = initialBarberShopState(1, 1);
-		const resultingState = simulate(
+		const resultingState = simulateBarberShop(
 			initialEvent,
 			initialState,
 			8 * 60, //minutes
@@ -45,7 +45,7 @@ describe("Barbershop", () => {
 	});
 	it("2 chairs 1 seat 8 hours", () => {
 		const initialState = initialBarberShopState(2, 1);
-		const resultingState = simulate(
+		const resultingState = simulateBarberShop(
 			initialEvent,
 			initialState,
 			8 * 60, //minutes
@@ -56,7 +56,7 @@ describe("Barbershop", () => {
 	});
 	it("1 chair 2 seats 8 hours", () => {
 		const initialState = initialBarberShopState(1, 2);
-		const resultingState = simulate(
+		const resultingState = simulateBarberShop(
 			initialEvent,
 			initialState,
 			8 * 60, //minutes

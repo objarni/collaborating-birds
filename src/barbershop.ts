@@ -254,7 +254,7 @@ function randomRange(a: number, b: number) {
 	return Math.random() * (b - a) + a;
 }
 
-export function simulate(
+export function simulateBarberShop(
 	initialEvents: BarberShopSimEvent[],
 	initialSystemState: BarberShopState,
 	simulationTimeMinutes: number,
