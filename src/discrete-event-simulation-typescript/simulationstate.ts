@@ -1,4 +1,4 @@
-import {PriorityQueue} from "priority-queue-typescript";
+import type { PriorityQueue } from "priority-queue-typescript";
 
 export interface SimulationState<EventType extends object, SystemStateType> {
 	eventQueue: PriorityQueue<EventType>;
