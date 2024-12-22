@@ -33,15 +33,18 @@ export type Place = {
 };
 
 export type BarberShopSimEvent = SimEvent<BarberShopEvent>;
+
 export type BarberShopSimState = SimulationState<
 	BarberShopSimEvent,
 	BarberShopState
 >;
+
 export type HandlerResult = {
 	newSystemState: BarberShopState;
 	events: SimEvent<BarberShopEvent>[];
 };
-export type EventHandler = (
+
+export type BarberShopEventHandler = (
 	state: BarberShopState,
 	event: BarberShopSimEvent,
 ) => HandlerResult;
