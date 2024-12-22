@@ -2,18 +2,18 @@ import { PriorityQueue } from "priority-queue-typescript";
 import type {
 	BarberShopEvent,
 	BarberShopEventHandler,
+	BarberShopHandlerResult,
 	BarberShopSimEvent,
 	BarberShopSimState,
 	BarberShopState,
 	ChairStates,
 	Customer,
-	HandlerResult,
 } from "./barbershop.types.ts";
 
 export function barberShopEventHandler(
 	systemState: BarberShopState,
 	event: BarberShopSimEvent,
-): HandlerResult {
+): BarberShopHandlerResult {
 	const barberShopEvent = event.kind;
 	const eventTime = event.time;
 	return handleBarberShopEvent(barberShopEvent, eventTime, systemState);
@@ -23,7 +23,7 @@ function handleBarberShopEvent(
 	barberShopEvent: BarberShopEvent,
 	eventTime: number,
 	systemState: BarberShopState,
-): HandlerResult {
+): BarberShopHandlerResult {
 	switch (barberShopEvent.kind) {
 		case "CUSTOMER_ARRIVED": {
 			return handleCustomerArrived(barberShopEvent, eventTime, systemState);
@@ -44,7 +44,7 @@ function handleCustomerArrived(
 	},
 	eventTime: number,
 	systemState: BarberShopState,
-): HandlerResult {
+): BarberShopHandlerResult {
 	const arrivingCustomer = barberShopEvent.arrivingCustomer;
 	console.log(`Customer ${arrivingCustomer} arrived, staring through window.`);
 	const customerDecisionEvent = E(
@@ -71,7 +71,7 @@ function handleCustomerDecided(
 	barberShopEvent: { kind: "CUSTOMER_DECIDED"; decidedCustomer: string },
 	eventTime: number,
 	systemState: BarberShopState,
-): HandlerResult {
+): BarberShopHandlerResult {
 	const nextCustomerArriveEvent = E(
 		{
 			kind: "CUSTOMER_ARRIVED",
@@ -163,7 +163,7 @@ function handleCustomerFinished(
 	},
 	eventTime: number,
 	systemState: BarberShopState,
-): HandlerResult {
+): BarberShopHandlerResult {
 	const chair = barberShopEvent.chair;
 	const finishedCustomer = barberShopEvent.finishedCustomer;
 	systemState.customers = systemState.customers.filter(
