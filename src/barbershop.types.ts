@@ -45,7 +45,12 @@ export type BarberShopHandlerResult = HandlerResult<
 	BarberShopEvent
 >;
 
-export type BarberShopEventHandler = (
-	state: BarberShopState,
-	event: BarberShopSimEvent,
-) => BarberShopHandlerResult;
+export type EventHandler<SystemStateType, EventType> = (
+	state: SystemStateType,
+	event: SimEvent<EventType>,
+) => HandlerResult<SystemStateType, EventType>;
+
+export type BarberShopEventHandler = EventHandler<
+	BarberShopState,
+	BarberShopEvent
+>;
