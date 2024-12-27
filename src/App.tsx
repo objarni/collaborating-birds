@@ -32,7 +32,7 @@ function Statistics({ state, minutes }: BarberShopProps) {
 	);
 }
 
-function initialSimState(chairs: number, seats: number) {
+function initialBarberShopSimState(chairs: number, seats: number): BarberShopSimState {
 	const initialSystemState = initialBarberShopState(chairs, seats);
 	const initialEvents: BarberShopSimEvent[] = [
 		{
@@ -79,7 +79,7 @@ function Person() {
 function App() {
 	const [showStats, setShowStats] = useState(false);
 	const [simState, setSimState] = useState<BarberShopSimState>(
-		initialSimState(2, 2),
+		initialBarberShopSimState(2, 2),
 	);
 
 	useEffect(() => {
