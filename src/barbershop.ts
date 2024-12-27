@@ -12,8 +12,8 @@ import type {
 import {simStep} from "./discrete-event-simulation-typescript/simstep.ts";
 
 export function barberShopEventHandler(
-		event: BarberShopSimEvent,
-		systemState: BarberShopState,
+	systemState: BarberShopState,
+	event: BarberShopSimEvent,
 ): BarberShopHandlerResult {
 	const barberShopEvent = event.kind;
 	const eventTime = event.time;
