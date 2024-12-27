@@ -1,11 +1,11 @@
-import type { SimulationState } from "./simulationstate.ts";
+import type { SimState } from "./simState.ts";
 import type { EventHandler } from "./eventhandler.ts";
 
 export function simStep<EventType extends object, StateType>(
-	simulationState: SimulationState<EventType, StateType>,
+	simulationState: SimState<EventType, StateType>,
 	deltaTimeMinutes: number,
 	handleEvent: EventHandler<EventType, StateType>,
-): SimulationState<EventType, StateType> {
+): SimState<EventType, StateType> {
 	const newTime = simulationState.time + deltaTimeMinutes;
 	while (true) {
 		const nextEvent = simulationState.eventQueue.poll();
