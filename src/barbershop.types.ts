@@ -42,11 +42,11 @@ export type BarberShopSimState = SimulationState<
 >;
 
 export type BarberShopHandlerResult = HandlerResult<
-	BarberShopState,
-	BarberShopEvent
+	BarberShopEvent,
+	BarberShopState
 >;
 
 export type BarberShopEventHandler = EventHandler<
-	BarberShopState,
-	BarberShopEvent
+	BarberShopEvent,
+	BarberShopState
 >;
