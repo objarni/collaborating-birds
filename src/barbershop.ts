@@ -9,6 +9,8 @@ import type {
 	ChairStates,
 	Customer,
 } from "./barbershop.types.ts";
+import type {SimulationState} from "./discrete-event-simulation-typescript/simulationstate.ts";
+import type {EventHandler} from "./discrete-event-simulation-typescript/eventhandler.ts";
 
 export function barberShopEventHandler(
 	systemState: BarberShopState,
@@ -285,6 +287,14 @@ export function barberShopSimStep(
 	deltaTimeMinutes: number,
 	handleEvent: BarberShopEventHandler,
 ): BarberShopSimState {
+	return simStep(simulationState, deltaTimeMinutes, handleEvent);
+}
+
+export function simStep<EventType extends object, StateType>(
+	simulationState: SimulationState<EventType, StateType>,
+	deltaTimeMinutes: number,
+	handleEvent: EventHandler<EventType, StateType>,
+): SimulationState<EventType, StateType> {
 	const newTime = simulationState.time + deltaTimeMinutes;
 	while (true) {
 		const nextEvent = simulationState.eventQueue.poll();
