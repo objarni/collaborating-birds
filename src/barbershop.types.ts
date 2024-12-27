@@ -37,7 +37,7 @@ export type Place = {
 export type BarberShopSimEvent = SimEvent<BarberShopEvent>;
 
 export type BarberShopSimState = SimulationState<
-	BarberShopSimEvent,
+	BarberShopEvent,
 	BarberShopState
 >;
 
