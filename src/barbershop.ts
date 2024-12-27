@@ -1,4 +1,4 @@
-import { PriorityQueue } from "priority-queue-typescript";
+import {PriorityQueue} from "priority-queue-typescript";
 import type {
 	BarberShopEvent,
 	BarberShopEventHandler,
@@ -9,8 +9,7 @@ import type {
 	ChairStates,
 	Customer,
 } from "./barbershop.types.ts";
-import type {SimulationState} from "./discrete-event-simulation-typescript/simulationstate.ts";
-import type {EventHandler} from "./discrete-event-simulation-typescript/eventhandler.ts";
+import {simStep} from "./discrete-event-simulation-typescript/simstep.ts";
 
 export function barberShopEventHandler(
 	systemState: BarberShopState,
@@ -288,35 +287,6 @@ export function barberShopSimStep(
 	handleEvent: BarberShopEventHandler,
 ): BarberShopSimState {
 	return simStep(simulationState, deltaTimeMinutes, handleEvent);
-}
-
-export function simStep<EventType extends object, StateType>(
-	simulationState: SimulationState<EventType, StateType>,
-	deltaTimeMinutes: number,
-	handleEvent: EventHandler<EventType, StateType>,
-): SimulationState<EventType, StateType> {
-	const newTime = simulationState.time + deltaTimeMinutes;
-	while (true) {
-		const nextEvent = simulationState.eventQueue.poll();
-		if (nextEvent === null) {
-			return {
-				...simulationState,
-				time: newTime,
-			};
-		}
-		if (nextEvent.time > newTime) {
-			simulationState.eventQueue.add(nextEvent);
-			return {
-				...simulationState,
-				time: newTime,
-			};
-		}
-		const result = handleEvent(simulationState.systemState, nextEvent);
-		simulationState.systemState = result.newSystemState;
-		for (const event of result.events) {
-			simulationState.eventQueue.add(event);
-		}
-	}
 }
 
 export function initialBarberShopState(
