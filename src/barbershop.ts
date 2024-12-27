@@ -280,32 +280,6 @@ export function simulateBarberShop(
 	return simulationState.systemState;
 }
 
-export function simulate(
-	initialEvents: BarberShopSimEvent[],
-	initialSystemState: BarberShopState,
-	simulationTimeMinutes: number,
-	handleEvent: BarberShopEventHandler,
-): BarberShopState {
-	const eventQueue = new PriorityQueue<BarberShopSimEvent>(
-		10, // initial capability of queue
-		(a: BarberShopSimEvent, b: BarberShopSimEvent) => a.time - b.time,
-	);
-	for (const event of initialEvents) {
-		eventQueue.add(event);
-	}
-	let simulationState = {
-		time: 0,
-		systemState: initialSystemState,
-		eventQueue: eventQueue,
-	};
-	simulationState = barberShopSimStep(
-		simulationState,
-		simulationTimeMinutes,
-		handleEvent,
-	);
-	return simulationState.systemState;
-}
-
 export function barberShopSimStep(
 	simulationState: BarberShopSimState,
 	deltaTimeMinutes: number,
