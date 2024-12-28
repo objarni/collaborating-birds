@@ -8,7 +8,7 @@ export function simStep<EventType extends object, StateType>(
 ): SimState<EventType, StateType> {
 	const newTime = simulationState.time + deltaTimeMinutes;
 	while (true) {
-		const nextEvent = simulationState.eventQueue.poll();
+		const nextEvent = simulationState.events.poll();
 		if (nextEvent === null) {
 			return {
 				...simulationState,
@@ -16,16 +16,16 @@ export function simStep<EventType extends object, StateType>(
 			};
 		}
 		if (nextEvent.time > newTime) {
-			simulationState.eventQueue.add(nextEvent);
+			simulationState.events.add(nextEvent);
 			return {
 				...simulationState,
 				time: newTime,
 			};
 		}
-		const result = handleEvent(simulationState.systemState, nextEvent);
-		simulationState.systemState = result.newSystemState;
+		const result = handleEvent(simulationState.state, nextEvent);
+		simulationState.state = result.newSystemState;
 		for (const event of result.events) {
-			simulationState.eventQueue.add(event);
+			simulationState.events.add(event);
 		}
 	}
 }
