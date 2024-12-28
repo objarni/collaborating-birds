@@ -52,8 +52,8 @@ function initialBarberShopSimState(chairs: number, seats: number): BarberShopSim
 	}
 	return {
 		time: 0,
-		state: initialSystemState,
-		events: eventQueue,
+		systemState: initialSystemState,
+		eventQueue: eventQueue,
 	};
 }
 
@@ -102,7 +102,7 @@ function App() {
 			<div className={"simulation"}>
 				<div className={"chairs"}>Chairs</div>
 				<div className={"sofa"}>Sofa</div>
-				{simState.state.customers.map((customer) => (
+				{simState.systemState.customers.map((customer) => (
 					<div
 						className={`client ${customer.place.kind}-${customer.place.which}`}
 						key={customer.name}
@@ -122,7 +122,7 @@ function App() {
 					<h2 className={"subtle-border"}>Statistics?</h2>
 				</label>
 				{showStats && (
-					<Statistics state={simState.state} minutes={simState.time} />
+					<Statistics state={simState.systemState} minutes={simState.time} />
 				)}
 			</div>
 		</div>
