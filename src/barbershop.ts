@@ -1,4 +1,4 @@
-import {PriorityQueue} from "priority-queue-typescript";
+import { PriorityQueue } from "priority-queue-typescript";
 import type {
 	BarberShopEvent,
 	BarberShopEventHandler,
@@ -9,7 +9,7 @@ import type {
 	ChairStates,
 	Customer,
 } from "./barbershop.types.ts";
-import {simStep} from "./discrete-event-simulation-typescript/simstep.ts";
+import { simStep } from "./discrete-event-simulation-typescript/simstep.ts";
 
 export function barberShopEventHandler(
 	systemState: BarberShopState,

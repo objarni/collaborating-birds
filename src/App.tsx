@@ -32,7 +32,10 @@ function Statistics({ state, minutes }: BarberShopProps) {
 	);
 }
 
-function initialBarberShopSimState(chairs: number, seats: number): BarberShopSimState {
+function initialBarberShopSimState(
+	chairs: number,
+	seats: number,
+): BarberShopSimState {
 	const initialSystemState = initialBarberShopState(chairs, seats);
 	const initialEvents: BarberShopSimEvent[] = [
 		{
@@ -43,6 +46,7 @@ function initialBarberShopSimState(chairs: number, seats: number): BarberShopSim
 			},
 		},
 	];
+
 	const events = new PriorityQueue<BarberShopSimEvent>(
 		10, // initial capability of queue
 		(a: BarberShopSimEvent, b: BarberShopSimEvent) => a.time - b.time,
