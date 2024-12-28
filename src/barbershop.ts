@@ -12,28 +12,28 @@ import type {
 import { simStep } from "./discrete-event-simulation-typescript/sim.ts";
 
 export function barberShopEventHandler(
-	systemState: BarberShopState,
+	state: BarberShopState,
 	event: BarberShopSimEvent,
 ): BarberShopHandlerResult {
 	const barberShopEvent = event.kind;
 	const eventTime = event.time;
-	return handleBarberShopEvent(barberShopEvent, eventTime, systemState);
+	return handleBarberShopEvent(barberShopEvent, eventTime, state);
 }
 
 function handleBarberShopEvent(
 	barberShopEvent: BarberShopEvent,
 	eventTime: number,
-	systemState: BarberShopState,
+	state: BarberShopState,
 ): BarberShopHandlerResult {
 	switch (barberShopEvent.kind) {
 		case "CUSTOMER_ARRIVED": {
-			return handleCustomerArrived(barberShopEvent, eventTime, systemState);
+			return handleCustomerArrived(barberShopEvent, eventTime, state);
 		}
 		case "CUSTOMER_DECIDED": {
-			return handleCustomerDecided(barberShopEvent, eventTime, systemState);
+			return handleCustomerDecided(barberShopEvent, eventTime, state);
 		}
 		case "CUSTOMER_FINISHED": {
-			return handleCustomerFinished(barberShopEvent, eventTime, systemState);
+			return handleCustomerFinished(barberShopEvent, eventTime, state);
 		}
 	}
 }
@@ -44,7 +44,7 @@ function handleCustomerArrived(
 		arrivingCustomer: string;
 	},
 	eventTime: number,
-	systemState: BarberShopState,
+	state: BarberShopState,
 ): BarberShopHandlerResult {
 	const arrivingCustomer = barberShopEvent.arrivingCustomer;
 	console.log(`Customer ${arrivingCustomer} arrived, staring through window.`);
@@ -55,7 +55,7 @@ function handleCustomerArrived(
 		},
 		eventTime + 1,
 	);
-	systemState.customers.push({
+	state.customers.push({
 		name: arrivingCustomer,
 		place: {
 			kind: "AtWindow",
@@ -63,7 +63,7 @@ function handleCustomerArrived(
 		},
 	});
 	return {
-		newSystemState: systemState,
+		newSystemState: state,
 		events: [customerDecisionEvent],
 	};
 }
@@ -71,25 +71,23 @@ function handleCustomerArrived(
 function handleCustomerDecided(
 	barberShopEvent: { kind: "CUSTOMER_DECIDED"; decidedCustomer: string },
 	eventTime: number,
-	systemState: BarberShopState,
+	state: BarberShopState,
 ): BarberShopHandlerResult {
 	const nextCustomerArriveEvent = E(
 		{
 			kind: "CUSTOMER_ARRIVED",
-			arrivingCustomer: randomName(systemState.customers),
+			arrivingCustomer: randomName(state.customers),
 		},
 		eventTime + randomRange(2, 20),
 	);
-	const chair = systemState.chairs.findIndex(
-		(chair) => chair.state === "EMPTY",
-	);
+	const chair = state.chairs.findIndex((chair) => chair.state === "EMPTY");
 	const decidedCustomer = barberShopEvent.decidedCustomer;
 	if (chair >= 0) {
 		console.log(
 			eventTime,
 			`Customer ${decidedCustomer} is getting a hair cut at chair ${chair}.`,
 		);
-		systemState.chairs[chair] = {
+		state.chairs[chair] = {
 			state: "CUTTING_HAIR",
 			customerName: decidedCustomer,
 		};
@@ -100,24 +98,24 @@ function handleCustomerDecided(
 				which: chair,
 			},
 		};
-		systemState.customers = systemState.customers.map((customer) =>
+		state.customers = state.customers.map((customer) =>
 			customer.name === decidedCustomer ? newCustomer : customer,
 		);
 
 		const finishedEvent = getFinishedEvent(eventTime, chair, decidedCustomer);
 		return {
-			newSystemState: systemState,
+			newSystemState: state,
 			events: [nextCustomerArriveEvent, finishedEvent],
 		};
 	}
 
-	const seat = systemState.seats.findIndex((seat) => seat.state === "EMPTY");
+	const seat = state.seats.findIndex((seat) => seat.state === "EMPTY");
 	if (seat >= 0) {
 		console.log(
 			eventTime,
 			`Customer ${decidedCustomer} takes seat ${seat} to wait for a hair cut.`,
 		);
-		systemState.seats[seat] = {
+		state.seats[seat] = {
 			state: "WAITING_TO_CUT_HAIR",
 			customerName: decidedCustomer,
 			sitDownTime: eventTime,
@@ -130,12 +128,12 @@ function handleCustomerDecided(
 				which: seat,
 			},
 		};
-		systemState.customers = systemState.customers.map((customer) =>
+		state.customers = state.customers.map((customer) =>
 			customer.name === decidedCustomer ? newCustomer : customer,
 		);
 
 		return {
-			newSystemState: systemState,
+			newSystemState: state,
 			events: [nextCustomerArriveEvent],
 		};
 	}
@@ -144,14 +142,14 @@ function handleCustomerDecided(
 		eventTime,
 		`${decidedCustomer} arrived, and left - barber shop is busy.`,
 	);
-	systemState.customers = systemState.customers.filter(
+	state.customers = state.customers.filter(
 		(customer) => customer.name !== decidedCustomer,
 	);
 
-	systemState.missedClients += 1;
+	state.missedClients += 1;
 
 	return {
-		newSystemState: systemState,
+		newSystemState: state,
 		events: [nextCustomerArriveEvent],
 	};
 }
@@ -236,11 +234,11 @@ function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
 	};
 }
 
-function findLongestWaitingCustomer(systemState: BarberShopState) {
+function findLongestWaitingCustomer(state: BarberShopState) {
 	let longestWaitingCustomer = -1;
 	let earliestSitDownTime = Number.POSITIVE_INFINITY;
-	for (let i = systemState.seats.length - 1; i >= 0; i--) {
-		const seat = systemState.seats[i];
+	for (let i = state.seats.length - 1; i >= 0; i--) {
+		const seat = state.seats[i];
 		if (seat.state === "WAITING_TO_CUT_HAIR") {
 			if (seat.sitDownTime < earliestSitDownTime) {
 				longestWaitingCustomer = i;
