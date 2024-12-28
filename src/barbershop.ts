@@ -268,17 +268,16 @@ export function simulateBarberShop(
 	for (const event of initialEvents) {
 		eventQueue.add(event);
 	}
-	let simulationState = {
-		time: 0,
-		systemState: initialSystemState,
-		eventQueue: eventQueue,
-	};
-	simulationState = barberShopSimStep(
-		simulationState,
+	const finalSimState = barberShopSimStep(
+		{
+			time: 0,
+			systemState: initialSystemState,
+			eventQueue: eventQueue,
+		},
 		simulationTimeMinutes,
 		handleEvent,
 	);
-	return simulationState.systemState;
+	return finalSimState.systemState;
 }
 
 export function barberShopSimStep(
