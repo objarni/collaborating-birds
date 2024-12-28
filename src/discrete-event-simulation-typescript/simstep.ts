@@ -22,8 +22,8 @@ export function simStep<EventType extends object, StateType>(
 				time: newTime,
 			};
 		}
-		const result = handleEvent(simulationState.systemState, nextEvent);
-		simulationState.systemState = result.newSystemState;
+		const result = handleEvent(simulationState.state, nextEvent);
+		simulationState.state = result.newSystemState;
 		for (const event of result.events) {
 			simulationState.eventQueue.add(event);
 		}
