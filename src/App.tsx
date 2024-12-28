@@ -53,7 +53,7 @@ function initialBarberShopSimState(chairs: number, seats: number): BarberShopSim
 	return {
 		time: 0,
 		state: initialSystemState,
-		events: events,
+		events,
 	};
 }
 

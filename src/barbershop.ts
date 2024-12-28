@@ -272,7 +272,7 @@ export function simulateBarberShop(
 		{
 			time: 0,
 			state: initialSystemState,
-			events: events,
+			events,
 		},
 		simulationTimeMinutes,
 		handleEvent,
