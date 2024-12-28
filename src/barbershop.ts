@@ -9,7 +9,7 @@ import type {
 	ChairStates,
 	Customer,
 } from "./barbershop.types.ts";
-import { simStep } from "./discrete-event-simulation-typescript/simstep.ts";
+import { simStep } from "./discrete-event-simulation-typescript/sim.ts";
 
 export function barberShopEventHandler(
 	systemState: BarberShopState,
