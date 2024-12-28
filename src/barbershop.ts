@@ -261,18 +261,18 @@ export function simulateBarberShop(
 	simulationTimeMinutes: number,
 	handleEvent: BarberShopEventHandler,
 ): BarberShopState {
-	const eventQueue = new PriorityQueue<BarberShopSimEvent>(
+	const events = new PriorityQueue<BarberShopSimEvent>(
 		10, // initial capability of queue
 		(a: BarberShopSimEvent, b: BarberShopSimEvent) => a.time - b.time,
 	);
 	for (const event of initialEvents) {
-		eventQueue.add(event);
+		events.add(event);
 	}
 	const finalSimState = barberShopSimStep(
 		{
 			time: 0,
 			state: initialSystemState,
-			eventQueue: eventQueue,
+			events: events,
 		},
 		simulationTimeMinutes,
 		handleEvent,
