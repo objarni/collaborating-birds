@@ -1,5 +1,5 @@
-import type { EventHandler } from "./discrete-event-simulation-typescript/eventhandler.ts";
 import type {
+	EventHandler,
 	HandlerResult,
 	SimEvent,
 	SimState,
