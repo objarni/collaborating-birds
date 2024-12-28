@@ -1,4 +1,4 @@
-import type {PriorityQueue} from "priority-queue-typescript";
+import type { PriorityQueue } from "priority-queue-typescript";
 
 export interface SimEvent<T> {
 	time: number;
@@ -10,3 +10,8 @@ export interface SimState<EventType extends object, StateType> {
 	state: StateType;
 	time: number;
 }
+
+export type HandlerResult<EventType, StateType> = {
+	newSystemState: StateType;
+	events: SimEvent<EventType>[];
+};

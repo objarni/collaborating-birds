@@ -1,6 +1,9 @@
 import type { EventHandler } from "./discrete-event-simulation-typescript/eventhandler.ts";
-import type { HandlerResult } from "./discrete-event-simulation-typescript/handlerresult.ts";
-import type {SimEvent, SimState} from "./discrete-event-simulation-typescript/simevent.ts";
+import type {
+	HandlerResult,
+	SimEvent,
+	SimState,
+} from "./discrete-event-simulation-typescript/simevent.ts";
 
 export interface BarberShopState {
 	missedClients: number;
@@ -35,10 +38,7 @@ export type Place = {
 
 export type BarberShopSimEvent = SimEvent<BarberShopEvent>;
 
-export type BarberShopSimState = SimState<
-	BarberShopEvent,
-	BarberShopState
->;
+export type BarberShopSimState = SimState<BarberShopEvent, BarberShopState>;
 
 export type BarberShopHandlerResult = HandlerResult<
 	BarberShopEvent,

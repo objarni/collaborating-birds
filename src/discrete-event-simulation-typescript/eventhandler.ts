@@ -1,5 +1,4 @@
-import type { HandlerResult } from "./handlerresult.ts";
-import type { SimEvent } from "./simevent.ts";
+import type { HandlerResult, SimEvent } from "./simevent.ts";
 
 export type EventHandler<EventType, StateType> = (
 	state: StateType,
