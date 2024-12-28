@@ -3,7 +3,7 @@ import type {
 	HandlerResult,
 	SimEvent,
 	SimState,
-} from "./discrete-event-simulation-typescript/simevent.ts";
+} from "./discrete-event-simulation-typescript/sim.types.ts";
 
 export interface BarberShopState {
 	missedClients: number;

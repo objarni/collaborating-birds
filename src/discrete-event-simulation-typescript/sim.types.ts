@@ -15,6 +15,7 @@ export type HandlerResult<EventType, StateType> = {
 	newSystemState: StateType;
 	events: SimEvent<EventType>[];
 };
+
 export type EventHandler<EventType, StateType> = (
 	state: StateType,
 	event: SimEvent<EventType>,

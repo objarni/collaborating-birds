@@ -1,4 +1,4 @@
-import type { EventHandler, SimState } from "./simevent.ts";
+import type { EventHandler, SimState } from "./sim.types.ts";
 
 export function simStep<EventType extends object, StateType>(
 	simulationState: SimState<EventType, StateType>,
