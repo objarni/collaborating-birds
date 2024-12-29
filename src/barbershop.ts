@@ -1,5 +1,4 @@
 import type {
-	BarberShopEvent,
 	BarberShopHandlerResult,
 	BarberShopSimEvent,
 	BarberShopState,
@@ -53,13 +52,13 @@ function handleCustomerArrived(
 ): BarberShopHandlerResult {
 	const arrivingCustomer = barberShopEvent.arrivingCustomer;
 	console.log(`Customer ${arrivingCustomer} arrived, staring through window.`);
-	const customerDecisionEvent = E(
-		{
+	const customerDecisionEvent: BarberShopSimEvent = {
+		kind: {
 			kind: "CUSTOMER_DECIDED",
 			decidedCustomer: arrivingCustomer,
 		},
-		eventTime + 1,
-	);
+		time: eventTime + 1,
+	};
 	state.customers.push({
 		name: arrivingCustomer,
 		place: {
@@ -78,13 +77,13 @@ function handleCustomerDecided(
 	eventTime: number,
 	state: BarberShopState,
 ): BarberShopHandlerResult {
-	const nextCustomerArriveEvent = E(
-		{
+	const nextCustomerArriveEvent: BarberShopSimEvent = {
+		kind: {
 			kind: "CUSTOMER_ARRIVED",
 			arrivingCustomer: randomName(state.customers),
 		},
-		eventTime + randomRange(2, 20),
-	);
+		time: eventTime + randomRange(2, 20),
+	};
 	const chair = state.chairs.findIndex((chair) => chair.state === "EMPTY");
 	const decidedCustomer = barberShopEvent.decidedCustomer;
 	if (chair >= 0) {
@@ -229,13 +228,6 @@ function getFinishedEvent(
 			finishedCustomer: customerName,
 		},
 		time: now + randomRange(15, 60),
-	};
-}
-
-function E(kind: BarberShopEvent, time: number): BarberShopSimEvent {
-	return {
-		kind,
-		time,
 	};
 }
 
