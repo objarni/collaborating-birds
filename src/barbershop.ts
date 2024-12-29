@@ -13,9 +13,6 @@ export function initialBarberShopState(
 	const chairStates: ChairState[] = Array(chairs)
 		.fill(null)
 		.map(() => ({ state: "EMPTY" })); // Create unique objects
-	const seatStates: SeatStates[] = Array(chairs)
-		.fill(null)
-		.map(() => ({ state: "EMPTY" })); // Create unique objects
 
 	return {
 		money: 0,
