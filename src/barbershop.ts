@@ -30,14 +30,6 @@ export function barberShopEventHandler(
 ): BarberShopHandlerResult {
 	const barberShopEvent = event.kind;
 	const eventTime = event.time;
-	return handleBarberShopEvent(barberShopEvent, eventTime, state);
-}
-
-function handleBarberShopEvent(
-	barberShopEvent: BarberShopEvent,
-	eventTime: number,
-	state: BarberShopState,
-): BarberShopHandlerResult {
 	switch (barberShopEvent.kind) {
 		case "CUSTOMER_ARRIVED": {
 			return handleCustomerArrived(barberShopEvent, eventTime, state);
