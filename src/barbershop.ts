@@ -12,13 +12,16 @@ export function initialBarberShopState(
 ): BarberShopState {
 	const chairStates: ChairState[] = Array(chairs)
 		.fill(null)
-		.map(() => ({ state: "EMPTY" })); // Create unique objects
+		.map(() => ({ state: "EMPTY" }));
+	const seatStates: SeatState[] = Array(chairs)
+		.fill(null)
+		.map(() => ({ state: "EMPTY" }));
 
 	return {
 		money: 0,
 		missedClients: 0,
 		chairs: chairStates,
-		seats: Array(seats).fill({ state: "EMPTY" }),
+		seats: seatStates,
 		customers: [],
 	};
 }
