@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
 	barberShopEventHandler,
 	initialBarberShopState,
-	simulateBarberShop,
 } from "./barbershop.ts";
 import type { BarberShopSimEvent } from "./barbershop.types.ts";
+import { simulate } from "./discrete-event-simulation-typescript/sim.ts";
 
 describe("Barbershop", () => {
 	/* A barber shop simulation.
@@ -34,10 +34,10 @@ describe("Barbershop", () => {
 
 	it("1 chair 1 seat 8 hours", () => {
 		const initialState = initialBarberShopState(1, 1);
-		const resultingState = simulateBarberShop(
+		const resultingState = simulate(
 			initialEvent,
 			initialState,
-			8 * 60, //minutes
+			8 * 60,
 			barberShopEventHandler,
 		);
 		expect(resultingState.money).toBeGreaterThanOrEqual(2000);
@@ -45,10 +45,10 @@ describe("Barbershop", () => {
 	});
 	it("2 chairs 1 seat 8 hours", () => {
 		const initialState = initialBarberShopState(2, 1);
-		const resultingState = simulateBarberShop(
+		const resultingState = simulate(
 			initialEvent,
 			initialState,
-			8 * 60, //minutes
+			8 * 60,
 			barberShopEventHandler,
 		);
 		expect(resultingState.money).toBeGreaterThanOrEqual(4000);
@@ -56,10 +56,10 @@ describe("Barbershop", () => {
 	});
 	it("1 chair 2 seats 8 hours", () => {
 		const initialState = initialBarberShopState(1, 2);
-		const resultingState = simulateBarberShop(
+		const resultingState = simulate(
 			initialEvent,
 			initialState,
-			8 * 60, //minutes
+			8 * 60,
 			barberShopEventHandler,
 		);
 		expect(resultingState.money).toBeGreaterThanOrEqual(1800);
