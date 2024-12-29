@@ -1,4 +1,3 @@
-import { PriorityQueue } from "priority-queue-typescript";
 import type {
 	BarberShopEvent,
 	BarberShopEventHandler,
@@ -8,7 +7,7 @@ import type {
 	ChairStates,
 	Customer,
 } from "./barbershop.types.ts";
-import { simStep } from "./discrete-event-simulation-typescript/sim.ts";
+import { simulate } from "./discrete-event-simulation-typescript/sim.ts";
 
 export function barberShopEventHandler(
 	state: BarberShopState,
@@ -258,23 +257,12 @@ export function simulateBarberShop(
 	simulationTimeMinutes: number,
 	handleEvent: BarberShopEventHandler,
 ): BarberShopState {
-	const events = new PriorityQueue<BarberShopSimEvent>(
-		10, // initial capability of queue
-		(a: BarberShopSimEvent, b: BarberShopSimEvent) => a.time - b.time,
-	);
-	for (const event of initialEvents) {
-		events.add(event);
-	}
-	const finalSimState = simStep(
-		{
-			time: 0,
-			state: initialSystemState,
-			events,
-		},
+	return simulate(
+		initialEvents,
+		initialSystemState,
 		simulationTimeMinutes,
 		handleEvent,
 	);
-	return finalSimState.state;
 }
 
 export function initialBarberShopState(
