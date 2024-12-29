@@ -4,7 +4,6 @@ import type {
 	BarberShopEventHandler,
 	BarberShopHandlerResult,
 	BarberShopSimEvent,
-	BarberShopSimState,
 	BarberShopState,
 	ChairStates,
 	Customer,
@@ -266,7 +265,7 @@ export function simulateBarberShop(
 	for (const event of initialEvents) {
 		events.add(event);
 	}
-	const finalSimState = barberShopSimStep(
+	const finalSimState = simStep(
 		{
 			time: 0,
 			state: initialSystemState,
@@ -276,14 +275,6 @@ export function simulateBarberShop(
 		handleEvent,
 	);
 	return finalSimState.state;
-}
-
-export function barberShopSimStep(
-	simulationState: BarberShopSimState,
-	deltaTimeMinutes: number,
-	handleEvent: BarberShopEventHandler,
-): BarberShopSimState {
-	return simStep(simulationState, deltaTimeMinutes, handleEvent);
 }
 
 export function initialBarberShopState(

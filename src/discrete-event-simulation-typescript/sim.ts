@@ -1,4 +1,5 @@
-import type { EventHandler, SimState } from "./sim.types.ts";
+import { PriorityQueue } from "priority-queue-typescript";
+import type { EventHandler, SimEvent, SimState } from "./sim.types.ts";
 
 export function simStep<EventType extends object, StateType>(
 	simulationState: SimState<EventType, StateType>,
@@ -27,4 +28,29 @@ export function simStep<EventType extends object, StateType>(
 			simulationState.events.add(event);
 		}
 	}
+}
+
+export function simulate<EventType extends object, StateType>(
+	initialEvents: SimEvent<EventType>[],
+	initialSystemState: StateType,
+	simulationTimeMinutes: number,
+	handleEvent: EventHandler<EventType, StateType>,
+): StateType {
+	const events = new PriorityQueue<SimEvent<EventType>>(
+		10, // initial capability of queue
+		(a: SimEvent<EventType>, b: SimEvent<EventType>) => a.time - b.time,
+	);
+	for (const event of initialEvents) {
+		events.add(event);
+	}
+	const finalSimState = simStep<EventType, StateType>(
+		{
+			time: 0,
+			state: initialSystemState,
+			events,
+		},
+		simulationTimeMinutes,
+		handleEvent,
+	);
+	return finalSimState.state;
 }
