@@ -2,7 +2,7 @@ import type {
 	BarberShopHandlerResult,
 	BarberShopSimEvent,
 	BarberShopState,
-	ChairStates,
+	ChairState,
 	Customer,
 } from "./barbershop.types.ts";
 
@@ -10,7 +10,10 @@ export function initialBarberShopState(
 	chairs: number,
 	seats: number,
 ): BarberShopState {
-	const chairStates: ChairStates[] = Array(chairs)
+	const chairStates: ChairState[] = Array(chairs)
+		.fill(null)
+		.map(() => ({ state: "EMPTY" })); // Create unique objects
+	const seatStates: SeatStates[] = Array(chairs)
 		.fill(null)
 		.map(() => ({ state: "EMPTY" })); // Create unique objects
 

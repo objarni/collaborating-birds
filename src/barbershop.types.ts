@@ -8,16 +8,16 @@ import type {
 export interface BarberShopState {
 	missedClients: number;
 	money: number;
-	chairs: ChairStates[];
-	seats: SeatStates[];
+	chairs: ChairState[];
+	seats: SeatState[];
 	customers: Customer[];
 }
 
-export type ChairStates =
+export type ChairState =
 	| { state: "EMPTY" }
 	| { state: "CUTTING_HAIR"; customerName: string };
 
-type SeatStates =
+type SeatState =
 	| { state: "EMPTY" }
 	| { state: "WAITING_TO_CUT_HAIR"; customerName: string; sitDownTime: number };
 
