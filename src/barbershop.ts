@@ -7,6 +7,23 @@ import type {
 	Customer,
 } from "./barbershop.types.ts";
 
+export function initialBarberShopState(
+	chairs: number,
+	seats: number,
+): BarberShopState {
+	const chairStates: ChairStates[] = Array(chairs)
+		.fill(null)
+		.map(() => ({ state: "EMPTY" })); // Create unique objects
+
+	return {
+		money: 0,
+		missedClients: 0,
+		chairs: chairStates,
+		seats: Array(seats).fill({ state: "EMPTY" }),
+		customers: [],
+	};
+}
+
 export function barberShopEventHandler(
 	state: BarberShopState,
 	event: BarberShopSimEvent,
@@ -247,24 +264,6 @@ function findLongestWaitingCustomer(state: BarberShopState) {
 
 function randomRange(a: number, b: number) {
 	return Math.random() * (b - a) + a;
-}
-
-export function initialBarberShopState(
-	chairs: number,
-	seats: number,
-): BarberShopState {
-	// const chairStates: ChairStates[] = Array(chairs).fill("EMPTY");
-	const chairStates: ChairStates[] = Array(chairs)
-		.fill(null)
-		.map(() => ({ state: "EMPTY" })); // Create unique objects
-
-	return {
-		money: 0,
-		missedClients: 0,
-		chairs: chairStates,
-		seats: Array(seats).fill({ state: "EMPTY" }),
-		customers: [],
-	};
 }
 
 function randomName(customers: Customer[]): string {
