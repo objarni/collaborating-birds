@@ -17,7 +17,7 @@ export type ChairState =
 	| { state: "EMPTY" }
 	| { state: "CUTTING_HAIR"; customerName: string };
 
-type SeatState =
+export type SeatState =
 	| { state: "EMPTY" }
 	| { state: "WAITING_TO_CUT_HAIR"; customerName: string; sitDownTime: number };
 

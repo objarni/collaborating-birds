@@ -4,6 +4,7 @@ import type {
 	BarberShopState,
 	ChairState,
 	Customer,
+	SeatState,
 } from "./barbershop.types.ts";
 
 export function initialBarberShopState(
@@ -13,7 +14,7 @@ export function initialBarberShopState(
 	const chairStates: ChairState[] = Array(chairs)
 		.fill(null)
 		.map(() => ({ state: "EMPTY" }));
-	const seatStates: SeatState[] = Array(chairs)
+	const seatStates: SeatState[] = Array(seats)
 		.fill(null)
 		.map(() => ({ state: "EMPTY" }));
 
